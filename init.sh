@@ -1,4 +1,4 @@
-
+#! /bin/bash
 
 function create_auser(){
 	exists=`cat /etc/passwd | grep -c auser`

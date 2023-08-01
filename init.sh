@@ -4,7 +4,7 @@ function create_auser(){
 	exists=`cat /etc/passwd | grep -c auser`
 	if [ $exists -ne 1 ];then
 	  echo "create a new user:  auser"
-	  useradd $username
+	  useradd auser
 
 	  password=`head /dev/urandom | tr -dc 'A-Za-z0-9!@#$%^&*' | head -c 16 ; echo ''`
 	  echo "Random Password: $password"
@@ -173,7 +173,7 @@ function install_supervisor(){
 	cd /opt || exit 1
 	source /etc/bashrc
 	pip uninstall -y supervisor
-	pip install -q supervisor
+	pip install supervisor
 	pip show supervisor
 
 	echo_supervisor_conf

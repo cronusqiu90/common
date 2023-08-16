@@ -1,0 +1,19 @@
+#supervisord.service
+
+[Unit]
+Description=Supervisor Daemon
+
+[Service]
+User=auser
+Group=auser
+Type=forking
+ExecStart=/usr/local/miniconda3/bin/supervisord -c /etc/supervisord.conf
+ExecStartPre=/usr/bin/mkdir -p /var/supervisord
+ExecStop=/usr/local/miniconda3/bin/supervisorctl -c /etc/supervisord.conf shutdown
+ExecReload=/usr/local/miniconda3/bin/supervisorctl -c /etc/supervisord.conf reload
+KillMode=process
+Restart=on-failure
+RestartSec=30s
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,159 @@
+{
+    "python.venvPath": "venv",
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.autoImportCompletions": false,
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "ms-python.python",
+    },
+    "go.useLanguageServer": true,
+    "go.coverOnTestPackage": false,
+    "go.enableCodeLens": {
+        "runtest": false
+    },
+    "go.lintTool": "golint",
+    "go.lintOnSave": "off",
+    "go.formatTool": "gofmt",
+    "go.showWelcome": false,
+    // Upgrade
+    "update.enableWindowsBackgroundUpdates": false,
+    "update.showReleaseNotes": false,
+    "update.mode": "none",
+    //
+    "markdown.preview.scrollEditorWithPreview": false,
+    "markdown.preview.scrollPreviewWithEditor": true,
+    "markdown.updateLinksOnFileMove.enableForDirectories": false,
+    "extensions.autoCheckUpdates": false,
+    "extensions.autoUpdate": false,
+    "extensions.ignoreRecommendations": true,
+    //
+    "workbench.startupEditor": "none",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "workbench.editor.enablePreview": false,
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.editor.empty.hint": "hidden",
+    "workbench.colorTheme": "Default Light Modern",
+    //
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.git": true,
+        "**/.idea": true,
+        "**/.pyc": true,
+        "**/.vscode": true,
+        // "**/venv": true,
+    },
+    //
+    "editor.smoothScrolling": true,
+    "editor.cursorBlinking": "expand",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "workbench.list.smoothScrolling": true,
+    "editor.autoClosingBrackets": "beforeWhitespace",
+    "editor.autoClosingDelete": "always",
+    "editor.autoClosingOvertype": "always",
+    "editor.autoClosingQuotes": "beforeWhitespace",
+    "editor.detectIndentation": false,
+    "editor.suggestSelection": "first",
+    "editor.fontFamily": "'Fria Code', Consolas, 'Operator Mono'",
+    "editor.fontWeight": "550",
+    "editor.lineNumbers": "on",
+    "editor.tabSize": 4,
+    "editor.wordWrap": "on",
+    "editor.renderLineHighlight": "line",
+    "editor.lineHeight": 22,
+    "editor.fontSize": 13,
+    "editor.roundedSelection": false,
+    "editor.fontLigatures": true,
+    "editor.guides.bracketPairs": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.mouseWheelZoom": true,
+    "editor.experimental.asyncTokenization": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    //
+    "security.workspace.trust.startupPrompt": "never",
+    "security.workspace.trust.enabled": false,
+    //
+    "terminal.integrated.fontSize": 13,
+    "terminal.integrated.confirmOnExit": "always",
+    "terminal.integrated.allowChords": false,
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "terminal.external.windowsExec": "C:/Windows/System32/cmd.exe",
+    "terminal.integrated.fontFamily": "Consolas",
+    //
+    "settingsSync.keybindingsPerPlatform": false,
+    //
+    "task.autoDetect": "off",
+    "remote.autoForwardPorts": false,
+    "debug.console.fontFamily": "'Operator Mono Bold', Consolas",
+    "explorer.confirmDelete": false,
+    "explorer.compactFolders": false,
+    "notebook.compactView": true,
+    //
+    "git.optimisticUpdate": false,
+    "git.autofetchPeriod": 0,
+    "git.autorefresh": false,
+    "git.autoRepositoryDetection": false,
+    "git.ignoreLegacyWarning": true,
+    "git.enableSmartCommit": true,
+    //
+    "vim.easymotionMarkerFontWeight": "",
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [
+                "j",
+                "j"
+            ],
+            "after": [
+                "<Esc>"
+            ]
+        }
+    ],
+    "vim.leader": "<space>",
+    "vim.handleKeys": {
+        "<C-a>": false,
+        "<C-f>": false
+    },
+    "vsicons.dontShowNewVersionMessage": true,
+    "search.followSymlinks": false,
+    "window.zoomLevel": 0.3,
+    "debug.console.fontSize": 13,
+    "terminal.integrated.gpuAcceleration": "off",
+    "terminal.integrated.customGlyphs": false,
+    "svn.showUpdateMessage": false,
+    "svn.update.ignoreExternals": false,
+    "css.format.enable": false,
+    "less.format.enable": false,
+    "scss.format.enable": false,
+    "html.format.enable": false,
+    "javascript.format.enable": false,
+    "typescript.format.enable": false,
+    "css.format.newlineBetweenRules": false,
+    "css.format.newlineBetweenSelectors": false,
+    "css.format.preserveNewLines": false,
+    "less.format.newlineBetweenRules": false,
+    "less.format.newlineBetweenSelectors": false,
+    "less.format.preserveNewLines": false,
+    "scss.format.newlineBetweenRules": false,
+    "scss.format.newlineBetweenSelectors": false,
+    "scss.format.preserveNewLines": false,
+    "html.format.preserveNewLines": false,
+    "files.refactoring.autoSave": false,
+    "python.testing.autoTestDiscoverOnSaveEnabled": false,
+    "testing.saveBeforeTest": false,
+    "html.autoCreateQuotes": false,
+    "html.autoClosingTags": false,
+    "accessibility.signals.save": {
+        "announcement": "never"
+    },
+    "accessibility.signals.format": {
+        "announcement": "never"
+    },
+}

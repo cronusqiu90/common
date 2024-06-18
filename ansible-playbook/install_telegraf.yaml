@@ -1,0 +1,42 @@
+- name: install telegraf v1.29.5
+  hosts: all
+  become: false
+  gather_facts: false
+  vars:
+    ansible_ssh_private_key_file: /root/.ssh/id_rsa
+    ansible_user: {{ SSH_USER }}
+    ansible_port: {{ SSH_PORT }}
+
+  tasks:
+    - name: [1] download telegraf 1.29.5 package
+      get_url:
+        url: https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5-1.x86_64.rpm
+        dest: /tmp/telegraf-1.29.5-1.x86_64.rpm
+
+    - name: [2] donwload telegraf.conf
+      get_url:
+        url: https://raw.githubusercontent.com/cronusqiu90/common/main/telegraf.conf
+        dest: /tmp/telegraf.conf
+
+    - name: [2.1] replace key information
+      shell: sed -i "s/{{ AMQP_URL }}//g" /tmp/telegraf.conf
+
+    - name: [2.2] replace key information
+      shell: sed -i "s/{{ AMQP_USER }}//g" /tmp/telegraf.conf
+
+    - name: [2.3] replace key information
+      shell: sed -i "s/{{ AMQP_PWD }}//g" /tmp/telegraf.conf
+
+    - name: [3] install telegraf
+      yum:
+        name: /tmp/telegraf-1.29.5-1.x86_64.rpm
+        state: present 
+
+    - name: [4] overwrite telegraf.conf
+      shell: mv -f /tmp/telegraf.conf /etc/telegraf/telegraf.conf
+
+    - name: [5] start telegraf service
+      systemd:
+        name: telegraf
+        state: started
+        enabled: yes

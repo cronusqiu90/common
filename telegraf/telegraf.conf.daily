@@ -1,0 +1,15 @@
+[[inputs.filecount]]
+  directories = ["/home/auser/TRClient", "/home/auser/Crawler", "/home/auser/Data"]
+  recursive = true
+
+[[outputs.amqp]]
+  brokers = ["amqp://AMQP_URL/telegraf"]
+  max_messages = 10
+  exchange = "telegraf2"
+  exchange_type = "topic"
+  exchange_durability = "durable"
+  username = "AMQP_USER"
+  password = "AMQP_PWD"
+  auth_method = "PLAIN"
+  routing_key = "telegraf2"
+  delivery_mode = "transient"

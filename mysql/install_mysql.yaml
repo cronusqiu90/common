@@ -1,0 +1,40 @@
+- name: install mysql 5.7
+  hosts: all
+  become: false
+  gather_facts: false
+  vars:
+    ansible_ssh_private_key_file: /root/.ssh/id_rsa
+    ansible_user: {{ SSH_USER }}
+    ansible_port: {{ SSH_PORT }}
+  
+  tasks:
+    - name: [1] setup mysql 5.7 repo
+      yum:
+        name: http://repo.mysql.com/mysql57-community-release-el7-11.noarch.rpm
+        state: present
+    
+    - name: [2] rpm install mysql-conmunity-server
+      yum:
+        name:
+        - mysql-community-server
+        state: present
+    
+    - name: [3] download my.cnf
+      get_url:
+        url: https://raw.githubusercontent.com/cronusqiu90/common/main/mysql/my.cnf
+        dest: /etc/my.cnf
+
+    - name: [3] start mysqld service
+      service:
+        name: mysqld
+        state: started
+        enabled: yes
+    
+    - name: [4] setup root password
+      shell: mysqladmin -u 'root' password '{{ MYSQL_ROOT_PASSWORD }}'
+    
+     - name: [5] start mysqld service
+       service:
+        name: mysqld
+        state: stopped
+  

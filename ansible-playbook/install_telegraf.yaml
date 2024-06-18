@@ -15,7 +15,7 @@
 
     - name: [2] donwload telegraf.conf
       get_url:
-        url: https://raw.githubusercontent.com/cronusqiu90/common/main/telegraf.conf
+        url: https://raw.githubusercontent.com/cronusqiu90/common/main/conf/telegraf.conf
         dest: /tmp/telegraf.conf
 
     - name: [2.1] replace key information

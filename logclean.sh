@@ -12,12 +12,12 @@ function cleanDir(){
         rm -rf *2024-03*
         rm -rf *2024-04*
         rm -rf *2024-05*
+        truncatet -s 0 ERROR*
 
         find . -maxdepth 1 -type f -print0 | while IFS= read -r -d '' file; do
-            echo "$file"
             fsize=$(stat -c "%s" "$file")
             fsizeMB=$(echo "scale=2; $fsize / 1024 / 1024" | bc)
-            if (( $(awk -v size="$file_size_mb" 'BEGIN {print (size > 50 ? 1 : 0)}') )); then
+            if (( $(awk -v size="$file_size_mb" 'BEGIN {print (size > 20 ? 1 : 0)}') )); then
                 #truncate -s 0 file
                 echo "truncate -s 0 $file"
             fi

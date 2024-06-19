@@ -24,5 +24,4 @@ function cleanDir(){
     fi
 }
 
-
 cleanDir $1

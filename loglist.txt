@@ -1,0 +1,3 @@
+/home/auser/TRClient
+/home/auser/Crawler/6/2/Deploy/logs
+/home/auser/Crawler/3/7/Deploy/logs

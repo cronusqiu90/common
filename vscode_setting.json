@@ -72,19 +72,22 @@
     "editor.mouseWheelZoom": true,
     "editor.experimental.asyncTokenization": false,
     "editor.suggest.snippetsPreventQuickSuggestions": false,
+    // "editor.codeActionsOnSave": {
+    //     "source.organizeImports": "explicit",
+    // },
     "files.insertFinalNewline": true,
     "files.simpleDialog.enable": true,
-    "files.exclude": {
-        "**/__pycache__": true,
-        "**/.git": true,
-        "**/.idea": true,
-        "**/.pyc": true,
-        "**/.vscode": true,
-    },
+    // "files.exclude": {
+    //     "**/__pycache__": true,
+    //     "**/.git": true,
+    //     "**/.idea": true,
+    //     "**/.pyc": true,
+    //     "**/.vscode": true,
+    // },
     "files.refactoring.autoSave": false,
     "workbench.list.smoothScrolling": true,
-    "workbench.editor.tabActionLocation": "left",
-    "workbench.sideBar.location": "right",
+    "workbench.editor.tabActionLocation": "right",
+    "workbench.sideBar.location": "left",
     "workbench.tree.expandMode": "singleClick",
     "workbench.tree.indent": 10,
     "workbench.startupEditor":"newUntitledFile",
@@ -94,7 +97,7 @@
     "workbench.editor.enablePreview": false,
     "workbench.iconTheme": "vscode-icons",
     "workbench.editor.empty.hint": "hidden",
-    "workbench.colorTheme": "Default Light Modern",
+    "workbench.colorTheme": "Visual Studio Light",
     "security.workspace.trust.startupPrompt": "never",
     "security.workspace.trust.enabled": false,
     "terminal.integrated.fontSize": 13,
@@ -129,7 +132,7 @@
     "git.autoRepositoryDetection": false,
     "git.ignoreLegacyWarning": true,
     "git.enableSmartCommit": true,
-    "git.autofetch": true,
+    "git.autofetch": false,
     // ======================== Svn ========================
     "svn.showUpdateMessage": false,
     "svn.update.ignoreExternals": false,
@@ -175,6 +178,5 @@
     "html.format.preserveNewLines": false,
     "html.autoCreateQuotes": false,
     "html.autoClosingTags": false,
-    // ======================== Disabled ========================
-    "http.proxy": "http://127.0.0.1:51081",
 }
+

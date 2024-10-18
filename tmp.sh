@@ -5,6 +5,7 @@ rm -rf upgrade.zip
 rm -rf cd
 rm -rf venv
 rm -rf home
+rm -rf tool
 
 cd /home/auser/TRClient
 rm -rf 5 3 9 7

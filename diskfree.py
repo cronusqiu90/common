@@ -23,9 +23,9 @@ for fsize, fpath in walk(path):
     if "2021-" in fpath or "2022-" in fpath or "2023-" in fpath or "2024-0":
         print("deleting %s" % fpath)
         os.remove(fpath)
-    if fsize == 0:
-        print("deleting %s" % fpath)
-        os.remove(fpath)
+    #if fsize == 0:
+    #    print("deleting %s" % fpath)
+    #    os.remove(fpath)
     elif fsize > MAX_MB:
         print("truncating %s" % fpath)
         os.popen("/usr/bin/truncate -s 0 %s" % fpath).read()

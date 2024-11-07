@@ -20,7 +20,7 @@ def walk(directory):
                 yield fsize, fpath
 
 for fsize, fpath in walk(path):
-    if "2021-" in fpath or "2022-" in fpath or "2023-" in fpath or "2024-0":
+    if "2021-" in fpath or "2022-" in fpath or "2023-" in fpath or "2024-0" in fpath:
         print("deleting %s" % fpath)
         os.remove(fpath)
     #if fsize == 0:

@@ -4,7 +4,7 @@ import sys
 
 path = sys.argv[1]
 MB = 1 << 20
-MAX_MB = 100 * MB
+MAX_MB = 50 * MB
 
 
 def walk(directory):

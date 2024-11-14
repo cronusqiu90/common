@@ -11,6 +11,22 @@ from sqlalchemy.pool import QueuePool
 
 __all__ = ["Table", "setup", "session"]
 
+#  Example:
+#
+#  import db
+#
+#  db.setup(dbname="", user="", password="")
+#  with db.session() as session:
+#      cursor = session.query(User)
+#      cursor = cursor.filter(User.enabled = 1)
+#      for user in cursor.all():
+#          user.level += 1
+#      session.flush()
+#
+#
+#
+#
+
 _engine = None
 _session_factory = None
 _session_maker = None

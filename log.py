@@ -10,6 +10,22 @@ from loguru import _file_sink
 from loguru._datetime import aware_now as _aware_now
 
 
+# Example:
+#  import log
+#
+#  # default level is INFO
+#  log.info("hello")
+#  # 2024-11-14 17:13:00.183 | INFO    | log | m.py:7 | hello
+#
+#  # enable debug level
+#  log._enable_debug()
+#
+#  # create a new logger and use default parameter
+#  slog = log.new("slog", sink=sys.stdout)
+#  slog.info("hello")
+#  # 2024-11-14 17:13:00.183 | INFO    | slog | m.py:7 | hello
+
+
 _default_format = (
     "{time:YYYY-MM-DD HH:mm:ss.SSS} | "
     "{level:<7} | "
@@ -57,6 +73,7 @@ def new(module, sink, level="INFO", format=_default_format, rotate="00:00"):
     )
     _log.add(sink, format=format, level=level, backtrace=True, colorize=False, **kwargs)
     return _log
+
 
 TRACE = "TRACE"
 DEBUG = "DEBUG"

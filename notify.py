@@ -9,6 +9,26 @@ from weakref import WeakMethod
 __all__ = ("Notify",)
 
 
+# Exmaple:
+# 1. define a notify instance
+# watchdog = Notify(name="watchdog", providing_args={"name", "data"})
+#
+#
+# 2. register a handler function
+# @watchdog.connect
+# def handle_watchdog_notify(*args, **kwargs):
+#     name = kwargs.pop("name")
+#     data = kwargs.pop("data")
+#
+#     # processing name and data
+#     ...
+#
+# 3. publish notify
+# sender = object()
+# watchdog.send(sender=sender, name="start", data={})
+#
+
+
 def _make_id(target):  # pragma: no cover
     if isinstance(target, (bytes, str)):
         # see Issue #2475

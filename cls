@@ -14,8 +14,7 @@ rm -rf /home/auser/TRClient/Release
 
 cd /home/auser/TRClient/Node_forzk
 rm -rf running.log.*
-rm -rf venv
-rm -rf data
+rm -rf data/*
 mkdir -p pkgs
 mv *.whl pkgs/
 

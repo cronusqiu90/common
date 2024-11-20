@@ -4,9 +4,13 @@ cd /home/auser/TRClient
 rm -rf MQ
 
 
-cd /home/auser/supervisord.d
-./prog remove -n IMNode_dt
-supervisorctl update
+cd /home/auser/TRClient/Deploy
+rm -rf venv
+rm -rf logs/*
+rm -rf *.log
+rm -rf Data/
+
+rm -rf /home/auser/TRClient/Release
 
 cd /home/auser/TRClient/Node_forzk
 rm -rf running.log*

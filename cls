@@ -13,7 +13,7 @@ rm -rf running.log*
 rm -rf venv
 rm -rf data
 rm -rf logs
-mkdir pkgs
+mkdir -p pkgs
 mv ./*whl pkgs/
 
 cd /home/auser/TRClient/NewPlt

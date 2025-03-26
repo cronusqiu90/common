@@ -69,7 +69,7 @@ app.conf.update(
     task_ignore_result=False,
     task_send_sent_event=True,
     task_serializer="msgpack",
-    task_track_started=True,
+    task_track_started=False,
     task_reject_on_worker_lost=True,
     task_protocol=1,
     #

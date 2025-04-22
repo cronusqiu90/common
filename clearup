@@ -1,16 +1,54 @@
-#! /bin/bash
+import os
+import re
 
-cd /home/auser
-rm -rf upgrade.zip
-rm -rf cd
-rm -rf venv
-rm -rf home
-rm -rf tool
+paths= [
+    "/home/auser/Crawler/3/1/Deploy/logs/",
+		"/home/auser/Crawler/4/1/Deploy/logs/",
+		"/home/auser/Crawler/6/1/Deploy/logs/",
+		"/home/auser/Crawler/8/1/Deploy/logs/",
+		"/home/auser/Crawler/9/1/Deploy/logs/",
+		"/home/auser/Crawler/9/6/Deploy/logs/",
+		"/home/auser/Crawler/11/6/Deploy/logs/",
+		"/home/auser/Crawler/25/1/Deploy/logs/",
+		"/home/auser/Crawler/37/1/Deploy/logs/",
+		"/home/auser/Crawler/39/6/Deploy/logs/",
+		"/home/auser/Crawler/56/1/Deploy/logs/",
+		"/home/auser/Crawler/83/1/Deploy/logs/",
+		"/home/auser/Crawler/84/1/Deploy/logs/",
+		"/home/auser/Crawler/85/1/Deploy/logs/",
+		"/home/auser/TRClient/Agent/TC/logs/TCAgent/",
+		"/home/auser/TRClient/Agent/TC2/logs/TCAgent/",
+        "/home/auser/Crawler/3/8/Deploy/logs/",
+		"/home/auser/Crawler/3/7/Deploy/logs/",
+		"/home/auser/Crawler/3/24/Deploy/logs/",
+		"/home/auser/Crawler/7/7/Deploy/logs/",
+		"/home/auser/Crawler/15/8/Deploy/venv/lib/python3.7/site-packages/front_15_8/logs/",
+		"/home/auser/Crawler/34/14/Deploy/logs/",
+		"/home/auser/Crawler/27/8/Deploy/logs",
+		"/data/Project/ad3200/program/PluginManagerForLBS/PluginManagerForFB/logs/",
+		"/data/Project/ad3200/program/PluginManagerForLBS/ParserV2LBS/logs/",
+		"/data/Project/ad3200/program/PluginManagerForNetworkPlatform/ParserV2/logs/",
+        "/home/auser/Crawler/6/2/Deploy/logs",
+]
 
-cd /home/auser/TRClient
-rm -rf 5 3 9 7
-rm -rf taskmgr
-rm -rf taskmgr2
-rm -rf agentd
-rm -rf isync
-rm -rf Openlab
+
+pattern = re.compile(r'^\d{1,2}_\d{1,2}_\d{1,2}-\d{4}-\d{2}-\d{2}\.log$')
+for path in paths:
+    names = os.listdir(path)
+    for name in names:
+        r = re.search(pattern, name)
+        if not r:
+            continue
+        full = os.path.join(path, name)
+        n = r.group()
+        pre, ext = os.path.splitext(n)
+        date = pre.split("-", 1)[-1]
+        year, month, day = date.split("-")
+        if int(year) < 2024:
+            os.remove(full)
+            print(full)
+            continue
+        elif int(year) == 2024 and int(month) < 10:
+            os.remove(full)
+            print(full)
+            continue

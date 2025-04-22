@@ -3,37 +3,39 @@ import re
 
 paths= [
     "/home/auser/Crawler/3/1/Deploy/logs/",
-		"/home/auser/Crawler/4/1/Deploy/logs/",
-		"/home/auser/Crawler/6/1/Deploy/logs/",
-		"/home/auser/Crawler/8/1/Deploy/logs/",
-		"/home/auser/Crawler/9/1/Deploy/logs/",
-		"/home/auser/Crawler/9/6/Deploy/logs/",
-		"/home/auser/Crawler/11/6/Deploy/logs/",
-		"/home/auser/Crawler/25/1/Deploy/logs/",
-		"/home/auser/Crawler/37/1/Deploy/logs/",
-		"/home/auser/Crawler/39/6/Deploy/logs/",
-		"/home/auser/Crawler/56/1/Deploy/logs/",
-		"/home/auser/Crawler/83/1/Deploy/logs/",
-		"/home/auser/Crawler/84/1/Deploy/logs/",
-		"/home/auser/Crawler/85/1/Deploy/logs/",
-		"/home/auser/TRClient/Agent/TC/logs/TCAgent/",
-		"/home/auser/TRClient/Agent/TC2/logs/TCAgent/",
-        "/home/auser/Crawler/3/8/Deploy/logs/",
-		"/home/auser/Crawler/3/7/Deploy/logs/",
-		"/home/auser/Crawler/3/24/Deploy/logs/",
-		"/home/auser/Crawler/7/7/Deploy/logs/",
-		"/home/auser/Crawler/15/8/Deploy/venv/lib/python3.7/site-packages/front_15_8/logs/",
-		"/home/auser/Crawler/34/14/Deploy/logs/",
-		"/home/auser/Crawler/27/8/Deploy/logs",
-		"/data/Project/ad3200/program/PluginManagerForLBS/PluginManagerForFB/logs/",
-		"/data/Project/ad3200/program/PluginManagerForLBS/ParserV2LBS/logs/",
-		"/data/Project/ad3200/program/PluginManagerForNetworkPlatform/ParserV2/logs/",
-        "/home/auser/Crawler/6/2/Deploy/logs",
+    "/home/auser/Crawler/4/1/Deploy/logs/",
+    "/home/auser/Crawler/6/1/Deploy/logs/",
+    "/home/auser/Crawler/8/1/Deploy/logs/",
+    "/home/auser/Crawler/9/1/Deploy/logs/",
+    "/home/auser/Crawler/9/6/Deploy/logs/",
+    "/home/auser/Crawler/11/6/Deploy/logs/",
+    "/home/auser/Crawler/25/1/Deploy/logs/",
+    "/home/auser/Crawler/37/1/Deploy/logs/",
+    "/home/auser/Crawler/39/6/Deploy/logs/",
+    "/home/auser/Crawler/56/1/Deploy/logs/",
+    "/home/auser/Crawler/83/1/Deploy/logs/",
+    "/home/auser/Crawler/84/1/Deploy/logs/",
+    "/home/auser/Crawler/85/1/Deploy/logs/",
+    "/home/auser/TRClient/Agent/TC/logs/TCAgent/",
+    "/home/auser/TRClient/Agent/TC2/logs/TCAgent/",
+    "/home/auser/Crawler/3/8/Deploy/logs/",
+    "/home/auser/Crawler/3/7/Deploy/logs/",
+    "/home/auser/Crawler/3/24/Deploy/logs/",
+    "/home/auser/Crawler/7/7/Deploy/logs/",
+    "/home/auser/Crawler/15/8/Deploy/venv/lib/python3.7/site-packages/front_15_8/logs/",
+    "/home/auser/Crawler/34/14/Deploy/logs/",
+    "/home/auser/Crawler/27/8/Deploy/logs",
+    "/data/Project/ad3200/program/PluginManagerForLBS/PluginManagerForFB/logs/",
+    "/data/Project/ad3200/program/PluginManagerForLBS/ParserV2LBS/logs/",
+    "/data/Project/ad3200/program/PluginManagerForNetworkPlatform/ParserV2/logs/",
+    "/home/auser/Crawler/6/2/Deploy/logs",
 ]
 
 
 pattern = re.compile(r'^\d{1,2}_\d{1,2}_\d{1,2}-\d{4}-\d{2}-\d{2}\.log$')
 for path in paths:
+    if not os.path.exists(path):
+        continue
     names = os.listdir(path)
     for name in names:
         r = re.search(pattern, name)

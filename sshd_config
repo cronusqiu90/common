@@ -1,0 +1,26 @@
+Port 17000
+
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+
+SyslogFacility AUTHPRIV
+PermitRootLogin prohibit-password
+AuthorizedKeysFile      .ssh/authorized_keys
+MaxAuthTries 4
+LoginGraceTime 60s
+PubkeyAuthentication yes
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+GSSAPIAuthentication no
+GSSAPICleanupCredentials no
+UsePAM no
+UseDNS no
+X11Forwarding no
+PermitTunnel no
+LogLevel INFO
+ClientAliveInterval 60
+ClientAliveCountMax 3
+TCPKeepAlive no
+MaxStartups 5:10:30
+Subsystem sftp /usr/libexec/openssh/sftp-server

@@ -1,0 +1,14 @@
+https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5-1.x86_64.rpm
+https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5_darwin_amd64.dmg
+https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5_darwin_amd64.tar.gz
+https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5_freebsd_amd64.tar.gz
+https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5_linux_amd64.tar.gz
+https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5_windows_amd64.zip
+https://dl.influxdata.com/telegraf/releases/telegraf_1.29.5-1_amd64.deb
+
+https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5-1.aarch64.rpm
+https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5_darwin_arm64.dmg
+https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5_darwin_arm64.tar.gz
+https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5_linux_arm64.tar.gz
+https://dl.influxdata.com/telegraf/releases/telegraf-1.29.5_windows_arm64.zip
+https://dl.influxdata.com/telegraf/releases/telegraf_1.29.5-1_arm64.deb

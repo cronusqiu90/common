@@ -8,6 +8,7 @@ grep "Failed password" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | 
 grep "refused connect" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> "$TEMP_IP_FILE"
 grep "Did not receive identification string" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> "$TEMP_IP_FILE"
 grep "Bad protocol version identification" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> "$TEMP_IP_FILE"
+grep "Invalid user" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> "$TEMP_IP_FILE"
 
 cat $TEMP_IP_FILE |wc -l
 

@@ -1,11 +1,9 @@
-Port 17000
-
+Port 22
 HostKey /etc/ssh/ssh_host_ed25519_key
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
-
 SyslogFacility AUTHPRIV
-PermitRootLogin prohibit-password
+PermitRootLogin without-password
 AuthorizedKeysFile      .ssh/authorized_keys
 MaxAuthTries 4
 LoginGraceTime 60s
@@ -14,11 +12,10 @@ PasswordAuthentication no
 ChallengeResponseAuthentication no
 GSSAPIAuthentication no
 GSSAPICleanupCredentials no
-UsePAM no
 UseDNS no
 X11Forwarding no
 PermitTunnel no
-LogLevel INFO
+LogLevel VERBOSE
 ClientAliveInterval 60
 ClientAliveCountMax 3
 TCPKeepAlive no

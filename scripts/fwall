@@ -1,26 +1,22 @@
 #! /bin/bash
 
 if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 {add|remove} <port>"
+    echo "Usage: $0 {add|remove|list} <port>"
     exit 1
 fi
 
 ACTION="$1"
 PORT="$2"
-if [ "$ACTION" != "add" ] && [ "$ACTION" != "remove" ]; then
-    echo "Usage: $0 {add|remove} <port>"
-    exit 1
-fi
-if ! [[ "$PORT" =~ ^[0-9]+$ ]] || [ "$PORT" -lt 1 ] || [ "$PORT" -gt 65535 ]; then
-    echo "Error: Port must be in range 1-65535"
-    exit 1
-fi
 if [ "$ACTION" = "add" ]; then
     firewall-cmd --add-port=${PORT} --permanent
     firewall-cmd --reload
+    firewall-cmd --list-ports
 fi
 if [ "$ACTION" = "remove" ]; then
     firewall-cmd --remove-port=${PORT} --permanent
     firewall-cmd --reload
+    firewall-cmd --list-ports
 fi
-firewall-cmd --list-ports
+if [ "$ACTION" = "remove" ]; then
+    firewall-cmd --list-ports
+fi

@@ -11,4 +11,9 @@ systemctl disable AssistDaemon.service
 rm -rf /etc/systemd/system/AssistDaemon.service
 rm -rf /usr/local/share/assist-daemon
 
+
+systemctl stop cloudResetPwdUpdateAgent
+systemctl disable cloudResetPwdUpdateAgent
+
 sudo systemctl daemon-reload
+

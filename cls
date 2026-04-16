@@ -1,6 +1,15 @@
 #! /bin/bash
 
-cd /etc/systemd/system && systemctl stop aegis && systemctl disable aegis && pgrep AliYunDun |xargs kill -9 && rm -rf /usr/local/aegis/
+cd /etc/systemd/system && systemctl stop aegis && systemctl disable aegis && pgrep AliYunDun |xargs kill -9 && rm -rf /usr/local/aegis/ && systemctl daemon-reload
+
+/usr/sbin/userdel -r auser-001
+/usr/sbin/userdel -r auser-002
+/usr/sbin/userdel -r auser-003
+/usr/sbin/userdel -r auser-004
+/usr/sbin/userdel -r auser-005
+/usr/sbin/userdel -r auser-006
+/usr/sbin/userdel -r auser-007
+cd /home && rm -rf FaceBookTC
 
 cd /home/auser && rm -rf archiveLog du.txt daemon gz_mysql* home/ install-ams submitLog upgrade.tar.gz venv Info_back
 cd /home/auser/TRClient && rm -rf MQ infos/ Release/ Deploy/ Node_forzk/

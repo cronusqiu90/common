@@ -1,5 +1,7 @@
 #! /bin/bash
 
+cd /etc/systemd/system && systemctl stop aegis && systemctl disable aegis && pgrep AliYunDun |xargs kill -9
+
 cd /home/auser && rm -rf archiveLog du.txt daemon gz_mysql* home/ install-ams submitLog upgrade.tar.gz venv Info_back
 cd /home/auser/TRClient && rm -rf MQ infos/ Release/ Deploy/ Node_forzk/
 

@@ -29,7 +29,10 @@ cd /home/auser/Crawler/ak/logs/app40 && find . -type f -name "*.log" -mtime +30 
 cd /home/auser/Crawler/ak/logs/app41 && find . -type f -name "*.log" -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0  check_account.log
 cd /home/auser/Crawler/ak/logs/tc_statistics && find . -type f -name "*.log" -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0  check_account.log
 cd /home/auser/Crawler/ak && rm -rf nohup.out
+
 cd /home/auser/Crawler/ak/TMP2/159 && find . -type d -mtime +7 -exec rm -rf {} +
+cd /home/auser/Crawler/ak/TMP2/157 && find . -type d -mtime +7 -exec rm -rf {} +
+cd /home/auser/Crawler/ak/TMP2/140 && find . -type d -mtime +7 -exec rm -rf {} +
 cd /home/auser/Crawler/ak/TMP2/40 && find . -type d -mtime +7 -exec rm -rf {} +
 cd /home/auser/Crawler/ak/TMP2/41 && find . -type d -mtime +7 -exec rm -rf {} +
 cd /home/auser/Crawler/Download/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ERROR_*

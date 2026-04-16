@@ -1,6 +1,6 @@
 #! /bin/bash
 
-cd /home/auser && rm -rf archiveLog du.txt daemon gz_mysql* home/ install-ams submitLog upgrade.tar.gz
+cd /home/auser && rm -rf archiveLog du.txt daemon gz_mysql* home/ install-ams submitLog upgrade.tar.gz venv
 cd /home/auser/TRClient && rm -rf MQ infos/ Release/ Deploy/ Node_forzk/
 cd /home/auser/TRClient/NewPlt && rm -rf taskmgr2 IMAgent2
 cd /home/auser/TRClient/Agent && rm -rf openlab Release

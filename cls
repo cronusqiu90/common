@@ -66,10 +66,10 @@ cd /home/auser/TRClient/LargeFile/branch-ad-discard/data && find . -name "*.zip"
 cd /home/auser/TRClient/LargeFile/ossMultiTrWire2Discard && rm -rf venv *.log log/* && find . -name "*.zip" -type f -mtime +365 -delete
 cd /home/auser/TRClient/LargeFile/ossMultiNewPathV1Wire2Discard && rm -rf venv *.log log/* && find . -name "*.zip" -type f -mtime +365 -delete
 cd /home/auser/TRClient/LargeFile/ossMultiTrDiscard && rm -rf venv *.log log/* && find . -name "*.zip" -type f -mtime +365 -delete
-
-
 cd /home/auser/TRClient/LargeFile/tools/genAccountInfo && rm -rf venv 
 cd /home/auser/TRClient/LargeFile/tools/IMWDog/Deploy/log && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/TRClient/LargeFile/tools/ossToolBranch && rm -rf venv 
 cd /home/auser/TRClient/LargeFile/tools/programTool && rm -rf venv
 cd /home/auser/TRClient/LargeFile/tools/ossTools && rm -rf venv && find . -name "*.log" -type f -mtime +30 -delete
+
+cd /home/auser/TRClient/6/2/mqAgent/logs/synchron && find . -name "*.log" -type f -mtime +15 -delete

@@ -80,3 +80,6 @@ cd /home/auser/TRClient/Node/logs && find . -name "*.log" -type f -mtime +30 -de
 
 
 cd /home/auser/TRClient/LargeFile/tools/IMWDog/Deploy/log && find . -type f -mtime +30 -delete
+
+
+cd /home/auser/TRClient/6/2/mqAgent/logs/synchron && find . -name "*.log" -type f -mtime +15 -delete

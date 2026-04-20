@@ -13,7 +13,7 @@ cd /home && rm -rf FaceBookTC
 
 cd /home/auser && rm -rf archiveLog du.txt daemon gz_mysql* home/ install-ams submitLog upgrade.tar.gz venv Info_back
 
-
+cd /home/auser/Crawler/85/1/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ./*
 cd /home/auser/Crawler/25/11/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ERROR_*
 cd /home/auser/Crawler/11/6/Deploy && truncate -s 0 running_download.log
 cd /home/auser/Crawler/3/8/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 *.log && truncate -s 0 Downloader-2026-0*
@@ -73,3 +73,7 @@ cd /home/auser/TRClient/LargeFile/tools/programTool && rm -rf venv
 cd /home/auser/TRClient/LargeFile/tools/ossTools && rm -rf venv && find . -name "*.log" -type f -mtime +30 -delete
 
 cd /home/auser/TRClient/6/2/mqAgent/logs/synchron && find . -name "*.log" -type f -mtime +15 -delete
+cd /home/auser/TRClient/4/2 && rm -rf Deploy-old/ mqAgent-discard/ taskmgr-discard/ && find . -name "*.log" -type f -mtime +15 -delete
+
+supervisorctl stop IMWDog 
+cd /home/auser/TRClient/LargeFile/tools/IMWDog/Deploy && rm -rf venv && find . -name "*.log" -type f -mtime +3 -delete

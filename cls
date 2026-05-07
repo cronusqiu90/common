@@ -16,7 +16,7 @@ cd /home/auser && rm -rf archiveLog du.txt daemon gz_mysql* home/ install-ams su
 cd /home/auser/Crawler/85/1/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ./*
 cd /home/auser/Crawler/34/8/Deploy/logs &&  find . -name "*.log" -type f -mtime +3 -delete && truncate -s 0 redd 
 cd /home/auser/Crawler/25/11/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ERROR_*
-cd /home/auser/Crawler/11/6/Deploy && truncate -s 0 running_download.log
+cd /home/auser/Crawler/11/6/Deploy && find . -name "*.log" -type f -mtime +3 -delete && truncate -s 0 running_download.log && truncate -s 0  ERROR_*.log
 cd /home/auser/Crawler/3/24 &&  find . -name "*.log" -type f -mtime +3 -delete
 cd /home/auser/Crawler/3/8/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 *.log && truncate -s 0 Downloader-2026-0*
 cd /home/auser/Crawler/3/8/Deploy && rm -rf *.1 && truncate -s 0 *.log

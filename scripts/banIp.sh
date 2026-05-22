@@ -6,11 +6,12 @@ BLACKLIST_FILE="/opt/blacklist.txt"
 
 update_black_ips(){
         echo ">> Updating blacklist"
-        grep "Failed password" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq > $BLACKLIST_FILE
-        grep "refused connect" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> $BLACKLIST_FILE
-        grep "Did not receive identification string" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> $BLACKLIST_FILE
-        grep "Bad protocol version identification" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> $BLACKLIST_FILE
-        grep "Invalid user" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> $BLACKLIST_FILE
+        grep "Failed password" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq > /tmp/blaa
+        grep "refused connect" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> /tmp/blaa
+        grep "Did not receive identification string" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> /tmp/blaa
+        grep "Bad protocol version identification" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> /tmp/blaa
+        grep "Invalid user" $LOG_FILE | grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' | sort | uniq >> /tmp/blaa
+        cat /tmp/blaa |sort -h |uniq > $BLACKLIST_FILE
 }
 
 cmd_init() {

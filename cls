@@ -13,6 +13,8 @@ cd /home && rm -rf FaceBookTC
 
 cd /home/auser && rm -rf archiveLog du.txt daemon gz_mysql* home/ install-ams submitLog upgrade.tar.gz venv Info_back
 
+cd /home/auser/Crawler/6/18/Deploy/file/document && find . -type d -empty -delete
+cd /home/auser/Crawler/6/18/Deploy/data && find . -type f -mtime +60 -delete
 cd /home/auser/Crawler/85/1/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ./*
 cd /home/auser/Crawler/34/8/Deploy/logs &&  find . -name "*.log" -type f -mtime +3 -delete && truncate -s 0 redd 
 cd /home/auser/Crawler/25/11/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ERROR_*
@@ -54,6 +56,8 @@ cd /home/auser/TRClient/AK/logs && find . -type f -name "*.log" -mtime +30 -dele
 cd /home/auser/TRClient/NewPlt && rm -rf taskmgr2 IMAgent2
 cd /home/auser/TRClient/NewPlt/IMAgent/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 *.log
 cd /home/auser/TRClient/NewPlt/IMUpload/logs && rm -rf *.log.* && truncate -s 0 *.log
+
+cd /home/auser/TRClient/NewPlt/taskmgr/data/taskmgr/error && find . -name "*.dat" -type f -mtime +30 -delete
 
 cd /home/auser/TRClient/Node && rm -rf running.log.*
 cd /home/auser/TRClient/Node/data/upload && find . -type f -mtime +1 -delete

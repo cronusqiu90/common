@@ -63,6 +63,8 @@ cd /home/auser/TRClient/Node && rm -rf running.log.*
 cd /home/auser/TRClient/Node/data/upload && find . -type f -mtime +1 -delete
 cd /home/auser/TRClient/Node/logs && find . -type f -name "*.log" -mtime +30 -delete
 
+cd /home/auser/TRClient/Agent && rm -rf CJ CJ.old
+
 cd /home/auser/TRClient/LargeFile && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/TRClient/LargeFile/ossMultiV1_discard && rm -rf *.log venv __pycache__ log/*
 cd /home/auser/TRClient/LargeFile/branch-newPlatformOnline/codeV3 && rm -rf *.log venv log/*

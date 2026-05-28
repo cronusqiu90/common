@@ -13,29 +13,31 @@ cd /home && rm -rf FaceBookTC
 
 cd /home/auser && rm -rf archiveLog du.txt daemon gz_mysql* home/ install-ams submitLog upgrade.tar.gz venv Info_back
 
+cd /home/auser/Crawler/9/8/Deploy/logs  && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/6/18/Deploy/file/document && find . -type d -empty -delete
 cd /home/auser/Crawler/6/18/Deploy/data && find . -type f -mtime +60 -delete
-cd /home/auser/Crawler/85/1/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ./*
+cd /home/auser/Crawler/85/1/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ./*
 cd /home/auser/Crawler/34/8/Deploy/logs &&  find . -name "*.log" -type f -mtime +3 -delete && truncate -s 0 redd 
-cd /home/auser/Crawler/25/11/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ERROR_*
+cd /home/auser/Crawler/25/11/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERROR_*
 cd /home/auser/Crawler/11/6/Deploy && find . -name "*.log" -type f -mtime +3 -delete && truncate -s 0 running_download.log && truncate -s 0  ERROR_*.log
 cd /home/auser/Crawler/3/24 &&  find . -name "*.log" -type f -mtime +3 -delete
-cd /home/auser/Crawler/3/8/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 *.log && truncate -s 0 Downloader-2026-0*
+cd /home/auser/Crawler/3/8/Deploy && rm -rf venv-bak
+cd /home/auser/Crawler/3/8/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 *.log && truncate -s 0 Downloader-2026-0*
 cd /home/auser/Crawler/3/8/Deploy && rm -rf *.1 && truncate -s 0 *.log
-cd /home/auser/Crawler/3/7/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 *.log && truncate -s 0 Downloader-2026-0*
+cd /home/auser/Crawler/3/7/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 *.log && truncate -s 0 Downloader-2026-0*
 cd /home/auser/Crawler/3/7/Deploy && rm -rf *.1 && truncate -s 0 *.log
-cd /home/auser/Crawler/40/8/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ERROR_*
+cd /home/auser/Crawler/40/8/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERROR_*
 cd /home/auser/Crawler/40/8/Deploy && rm -rf running.log.*
-cd /home/auser/Crawler/4/12/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ERROR_*
+cd /home/auser/Crawler/4/12/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERROR_*
 cd /home/auser/Crawler/4/12/Deploy && rm -rf nohup.out
-cd /home/auser/Crawler/7/7/Deploy/logs && find . -type f -name "*.log" -mtime +30 -delete
-cd /home/auser/Crawler/Download/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 ERROR_*
+cd /home/auser/Crawler/7/7/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
+cd /home/auser/Crawler/Download/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERROR_*
 
 cd /home/auser/Crawler/ak && rm -rf nohup.out
-cd /home/auser/Crawler/ak/logs/app159 && find . -type f -name "*.log" -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0 check_account.log
-cd /home/auser/Crawler/ak/logs/app40 && find . -type f -name "*.log" -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0 check_account.log
-cd /home/auser/Crawler/ak/logs/app41 && find . -type f -name "*.log" -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0  check_account.log
-cd /home/auser/Crawler/ak/logs/tc_statistics && find . -type f -name "*.log" -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0  check_account.log
+cd /home/auser/Crawler/ak/logs/app159 && find . -name "*.log" -type f -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0 check_account.log
+cd /home/auser/Crawler/ak/logs/app40 && find . -name "*.log" -type f -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0 check_account.log
+cd /home/auser/Crawler/ak/logs/app41 && find . -name "*.log" -type f -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0  check_account.log
+cd /home/auser/Crawler/ak/logs/tc_statistics && find . -name "*.log" -type f -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0  check_account.log
 cd /home/auser/Crawler/ak/TMP2/159 && find . -type d -mtime +7 -exec rm -rf {} +
 cd /home/auser/Crawler/ak/TMP2/157 && find . -type d -mtime +7 -exec rm -rf {} +
 cd /home/auser/Crawler/ak/TMP2/140 && find . -type d -mtime +7 -exec rm -rf {} +
@@ -46,22 +48,22 @@ cd /home/auser/TRClient && rm -rf MQ infos/ Release/ Deploy/ Node_forzk/ AppAgen
 cd /home/auser/TRClient/Agent && rm -rf openlab Release Upload LBS2 LBS LBS.old TCProfile
 cd /home/auser/TRClient/Agent/FileUp/logs && rm -rf *.log.*
 cd /home/auser/TRClient/Agent/TC2/logs && rm -rf *.1 && truncate -s 0 *.log
-cd /home/auser/TRClient/Agent/TC/logs/TCAgent && find . -type f -name "*.log" -mtime +30 -delete
-cd /home/auser/TRClient/Agent/MQUpload/logs && find . -type f -name "*.log" -mtime +30 -delete
-cd /home/auser/TRClient/Agent/MQUpload/data && find . -type f -name "*.log" -mtime +30 -delete
-cd /home/auser/TRClient/Agent/IMUpload && find . -type f -name "*.log" -mtime +30 -delete
+cd /home/auser/TRClient/Agent/TC/logs/TCAgent && find . -name "*.log" -type f -mtime +30 -delete
+cd /home/auser/TRClient/Agent/MQUpload/logs && find . -name "*.log" -type f -mtime +30 -delete
+cd /home/auser/TRClient/Agent/MQUpload/data && find . -name "*.log" -type f -mtime +30 -delete
+cd /home/auser/TRClient/Agent/IMUpload && find . -name "*.log" -type f -mtime +30 -delete
 
-cd /home/auser/TRClient/AK/logs && find . -type f -name "*.log" -mtime +30 -delete && rm -rf *.1
+cd /home/auser/TRClient/AK/logs && find . -name "*.log" -type f -mtime +30 -delete && rm -rf *.1
 
 cd /home/auser/TRClient/NewPlt && rm -rf taskmgr2 IMAgent2
-cd /home/auser/TRClient/NewPlt/IMAgent/logs && find . -type f -name "*.log" -mtime +30 -delete && truncate -s 0 *.log
+cd /home/auser/TRClient/NewPlt/IMAgent/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 *.log
 cd /home/auser/TRClient/NewPlt/IMUpload/logs && rm -rf *.log.* && truncate -s 0 *.log
 
 cd /home/auser/TRClient/NewPlt/taskmgr/data/taskmgr/error && find . -name "*.dat" -type f -mtime +30 -delete
 
 cd /home/auser/TRClient/Node && rm -rf running.log.*
 cd /home/auser/TRClient/Node/data/upload && find . -type f -mtime +1 -delete
-cd /home/auser/TRClient/Node/logs && find . -type f -name "*.log" -mtime +30 -delete
+cd /home/auser/TRClient/Node/logs && find . -name "*.log" -type f -mtime +30 -delete
 
 cd /home/auser/TRClient/Agent && rm -rf CJ CJ.old
 

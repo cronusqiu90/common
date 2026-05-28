@@ -13,6 +13,8 @@ cd /etc/systemd/system && systemctl stop aegis && systemctl disable aegis && pgr
 cd /home && rm -rf FaceBookTC
 cd /home/auser && rm -rf archiveLog du.txt daemon gz_mysql* home/ install-ams submitLog upgrade.tar.gz venv Info_back
 
+cd /home/auser/Crawler/6/18/Deploy/file/document && find . -type d -empty -delete
+cd /home/auser/Crawler/6/18/Deploy/data && find . -type f -mtime +60 -delete
 cd /home/auser/Crawler/3/1/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERROR_*
 cd /home/auser/Crawler/4/1/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERROR_*
 cd /home/auser/Crawler/6/1/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERROR_*

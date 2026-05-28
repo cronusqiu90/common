@@ -76,6 +76,8 @@ cd /home/auser/TRClient/NewPlt && rm -rf taskmgr2 IMAgent2
 cd /home/auser/TRClient/NewPlt/IMAgent/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 *.log
 cd /home/auser/TRClient/NewPlt/IMUpload/logs && rm -rf *.log.* && truncate -s 0 *.log
 
+cd /home/auser/TRClient/NewPlt/taskmgr/data/taskmgr/error && find . -name "*.dat" -type f -mtime +30 -delete
+
 cd /home/auser/TRClient/Node && rm -rf running.log.*
 cd /home/auser/TRClient/Node/data/upload && find . -type f -mtime +1 -delete
 cd /home/auser/TRClient/Node/logs && find . -name "*.log" -type f -mtime +30 -delete

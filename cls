@@ -85,6 +85,8 @@ cd /home/auser/TRClient/LargeFile/tools/ossTools && rm -rf venv && find . -name 
 cd /home/auser/TRClient/6/2/mqAgent/logs/synchron && find . -name "*.log" -type f -mtime +15 -delete
 cd /home/auser/TRClient/4/2 && rm -rf Deploy-old/ mqAgent-discard/ taskmgr-discard/ && find . -name "*.log" -type f -mtime +15 -delete
 
+cd /home/auser/TRClient/85/2/mqAgent/logs/synchron && find . -name "*.log" -type f -mtime +15 -delete
+
 supervisorctl stop IMWDog 
 cd /home/auser/TRClient/LargeFile/tools/IMWDog/Deploy && rm -rf venv && find . -name "*.log" -type f -mtime +3 -delete
 

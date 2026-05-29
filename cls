@@ -20,17 +20,19 @@ cd /home/auser/Crawler/85/1/Deploy/logs && find . -name "*.log" -type f -mtime +
 cd /home/auser/Crawler/34/8/Deploy/logs &&  find . -name "*.log" -type f -mtime +3 -delete && truncate -s 0 redd 
 cd /home/auser/Crawler/25/11/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERROR_*
 cd /home/auser/Crawler/11/6/Deploy && find . -name "*.log" -type f -mtime +3 -delete && truncate -s 0 running_download.log && truncate -s 0  ERROR_*.log
+
 cd /home/auser/Crawler/3/24 &&  find . -name "*.log" -type f -mtime +3 -delete
-cd /home/auser/Crawler/3/8/Deploy && rm -rf venv-bak
-cd /home/auser/Crawler/3/8/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 *.log && truncate -s 0 Downloader-2026-0*
-cd /home/auser/Crawler/3/8/Deploy && rm -rf *.1 && truncate -s 0 *.log
-cd /home/auser/Crawler/3/7/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 *.log && truncate -s 0 Downloader-2026-0*
+cd /home/auser/Crawler/3/8/Deploy && rm -rf venv-bak *.1 && truncate -s 0 *.log
+cd /home/auser/Crawler/3/8/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERR*.log && truncate -s 0 Downloader-2026-0*
+cd /home/auser/Crawler/3/7/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERR*.log && truncate -s 0 Downloader-2026-0*
 cd /home/auser/Crawler/3/7/Deploy && rm -rf *.1 && truncate -s 0 *.log
+
 cd /home/auser/Crawler/40/8/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERROR_*
 cd /home/auser/Crawler/40/8/Deploy && rm -rf running.log.*
 cd /home/auser/Crawler/4/12/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERROR_*
 cd /home/auser/Crawler/4/12/Deploy && rm -rf nohup.out
 cd /home/auser/Crawler/7/7/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
+
 cd /home/auser/Crawler/Download/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 ERROR_*
 
 cd /home/auser/Crawler/ak && rm -rf nohup.out
@@ -82,10 +84,12 @@ cd /home/auser/TRClient/LargeFile/tools/ossToolBranch && rm -rf venv
 cd /home/auser/TRClient/LargeFile/tools/programTool && rm -rf venv
 cd /home/auser/TRClient/LargeFile/tools/ossTools && rm -rf venv && find . -name "*.log" -type f -mtime +30 -delete
 
+cd /home/auser/TRClient/NewPlt/taskmgr/data/taskmgr/error && find . -name "*.dat" -type f -mtime +30 -delete
+cd /home/auser/TRClient/85/2/mqAgent/logs/synchron && find . -name "*.log" -type f -mtime +15 -delete
 cd /home/auser/TRClient/6/2/mqAgent/logs/synchron && find . -name "*.log" -type f -mtime +15 -delete
 cd /home/auser/TRClient/4/2 && rm -rf Deploy-old/ mqAgent-discard/ taskmgr-discard/ && find . -name "*.log" -type f -mtime +15 -delete
 
-cd /home/auser/TRClient/85/2/mqAgent/logs/synchron && find . -name "*.log" -type f -mtime +15 -delete
+
 
 supervisorctl stop IMWDog 
 cd /home/auser/TRClient/LargeFile/tools/IMWDog/Deploy && rm -rf venv && find . -name "*.log" -type f -mtime +3 -delete

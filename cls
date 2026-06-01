@@ -89,6 +89,7 @@ cd /home/auser/TRClient/85/2/mqAgent/logs/synchron && find . -name "*.log" -type
 cd /home/auser/TRClient/6/2/mqAgent/logs/synchron && find . -name "*.log" -type f -mtime +15 -delete
 cd /home/auser/TRClient/4/2 && rm -rf Deploy-old/ mqAgent-discard/ taskmgr-discard/ && find . -name "*.log" -type f -mtime +15 -delete
 
+cd /home/auser/TRClient/Agent/TC_Upload/logs/agent_send && find . -name "*.log" -type f -mtime +7 -delete
 
 
 supervisorctl stop IMWDog 

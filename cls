@@ -21,7 +21,6 @@ cd /home/auser/Crawler/4/12/Deploy && rm -rf nohup.out
 cd /home/auser/Crawler/7/7/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/3/7-bak/Deploy && rm -rf venv-bak venv running_cj3.log*
 cd /home/auser/Crawler/3/7-bak/Deploy/logs &&  find . -name "*.log" -type f -mtime +3 -delete
-
 cd /home/auser/Crawler/0/15/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/Download/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/ak && rm -rf nohup.out
@@ -35,6 +34,7 @@ cd /home/auser/Crawler/ak/TMP2/140 && find . -type d -mtime +7 -exec rm -rf {} +
 cd /home/auser/Crawler/ak/TMP2/40 && find . -type d -mtime +7 -exec rm -rf {} +
 cd /home/auser/Crawler/ak/TMP2/41 && find . -type d -mtime +7 -exec rm -rf {} +
 
+cd /home/auser/TRClient && rmdir ./* 2>/dev/null
 cd /home/auser/TRClient && rm -rf MQ infos/ Release/ Deploy/ Node_forzk/ AppAgent BJ103 Node
 cd /home/auser/TRClient/Agent && rm -rf openlab Release Upload LBS2 LBS LBS.old TCProfile
 cd /home/auser/TRClient/Agent/FileUp/logs && rm -rf *.log.*

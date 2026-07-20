@@ -19,6 +19,9 @@ cd /home/auser/Crawler/40/8/Deploy && rm -rf running.log.*
 cd /home/auser/Crawler/4/12/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete 
 cd /home/auser/Crawler/4/12/Deploy && rm -rf nohup.out
 cd /home/auser/Crawler/7/7/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
+cd /home/auser/Crawler/3/7-bak/Deploy && rm -rf venv-bak venv running_cj3.log*
+cd /home/auser/Crawler/3/7-bak/Deploy/logs &&  find . -name "*.log" -type f -mtime +3 -delete
+
 cd /home/auser/Crawler/0/15/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/Download/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/ak && rm -rf nohup.out

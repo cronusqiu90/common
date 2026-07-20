@@ -1,5 +1,6 @@
 #! /bin/bash
 
+cd /home/auser/Crawler && rmdir ./* 2>/dev/null
 cd /home/auser && rm -rf archiveLog du.txt daemon gz_mysql* home/ install-ams submitLog upgrade.tar.gz venv Info_back
 cd /home/auser/Crawler/9/8/Deploy/logs  && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/6/18/Deploy/file/document && find . -type d -empty -delete
@@ -18,6 +19,7 @@ cd /home/auser/Crawler/40/8/Deploy && rm -rf running.log.*
 cd /home/auser/Crawler/4/12/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete 
 cd /home/auser/Crawler/4/12/Deploy && rm -rf nohup.out
 cd /home/auser/Crawler/7/7/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
+cd /home/auser/Crawler/0/15/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/Download/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/ak && rm -rf nohup.out
 cd /home/auser/Crawler/ak/logs/app159 && find . -name "*.log" -type f -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0 check_account.log
@@ -29,7 +31,8 @@ cd /home/auser/Crawler/ak/TMP2/157 && find . -type d -mtime +7 -exec rm -rf {} +
 cd /home/auser/Crawler/ak/TMP2/140 && find . -type d -mtime +7 -exec rm -rf {} +
 cd /home/auser/Crawler/ak/TMP2/40 && find . -type d -mtime +7 -exec rm -rf {} +
 cd /home/auser/Crawler/ak/TMP2/41 && find . -type d -mtime +7 -exec rm -rf {} +
-cd /home/auser/TRClient && rm -rf MQ infos/ Release/ Deploy/ Node_forzk/ AppAgent BJ103 
+
+cd /home/auser/TRClient && rm -rf MQ infos/ Release/ Deploy/ Node_forzk/ AppAgent BJ103 Node
 cd /home/auser/TRClient/Agent && rm -rf openlab Release Upload LBS2 LBS LBS.old TCProfile
 cd /home/auser/TRClient/Agent/FileUp/logs && rm -rf *.log.*
 cd /home/auser/TRClient/Agent/TC2/logs && rm -rf *.1 && truncate -s 0 *.log
@@ -42,9 +45,6 @@ cd /home/auser/TRClient/NewPlt && rm -rf taskmgr2 IMAgent2
 cd /home/auser/TRClient/NewPlt/IMAgent/logs && find . -name "*.log" -type f -mtime +30 -delete && truncate -s 0 *.log
 cd /home/auser/TRClient/NewPlt/IMUpload/logs && rm -rf *.log.* && truncate -s 0 *.log
 cd /home/auser/TRClient/NewPlt/taskmgr/data/taskmgr/error && find . -name "*.dat" -type f -mtime +30 -delete
-cd /home/auser/TRClient/Node && rm -rf running.log.*
-cd /home/auser/TRClient/Node/data/upload && find . -type f -mtime +1 -delete
-cd /home/auser/TRClient/Node/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/TRClient/Agent && rm -rf CJ CJ.old
 cd /home/auser/TRClient/LargeFile && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/TRClient/LargeFile/ossMultiV1_discard && rm -rf *.log venv __pycache__ log/*

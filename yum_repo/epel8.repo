@@ -1,0 +1,5 @@
+[epel]
+name=Extra Packages for Enterprise Linux 8 - Huawei
+baseurl=https://repo.huaweicloud.com/epel/8/Everything/$basearch
+enabled=1
+gpgcheck=0

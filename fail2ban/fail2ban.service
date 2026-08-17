@@ -1,0 +1,20 @@
+[Unit]
+Description=Fail2Ban Service
+Documentation=man:fail2ban(1)
+After=network.target iptables.service firewalld.service ip6tables.service ipset.service nftables.service
+PartOf=firewalld.service
+
+[Service]
+Type=simple
+Environment="PYTHONNOUSERSITE=1"
+ExecStartPre=/bin/mkdir -p /run/fail2ban
+ExecStart=/usr/bin/fail2ban-server -xf start
+ExecStartPost=/bin/sh -c 'for i in $(seq 1 10); do [ -S /var/run/fail2ban/fail2ban.sock ] && chmod 660 /var/run/fail2ban/fail2ban.sock && break; sleep 1; done'
+ExecStop=/usr/bin/fail2ban-client stop
+ExecReload=/usr/bin/fail2ban-client reload
+PIDFile=/run/fail2ban/fail2ban.pid
+Restart=on-failure
+RestartPreventExitStatus=0 255
+
+[Install]
+WantedBy=multi-user.target

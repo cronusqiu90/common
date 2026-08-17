@@ -5,7 +5,8 @@ cd /home/auser && rm -rf archiveLog du.txt daemon gz_mysql* home/ install-ams su
 cd /home/auser/Crawler/9/8/Deploy/logs  && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/9/1/Deploy/logs  && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/6/18/Deploy/file/document && find . -type d -empty -delete
-cd /home/auser/Crawler/6/18/Deploy/data && find . -type f -mtime +60 -delete
+cd /home/auser/Crawler/6/18/Deploy/data && find . -type f -name "*.log" -mtime +60 -delete
+cd /home/auser/Crawler/6/4/Deploy/logs && find . -type f -name "*.log" -mtime +60 -delete
 cd /home/auser/Crawler/85/1/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/34/8/Deploy/logs &&  find . -name "*.log" -type f -mtime +3 -delete && truncate -s 0 redd 
 cd /home/auser/Crawler/27/8/Deploy/logs && find . -name "*.log" -type f -mtime +15 -delete

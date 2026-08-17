@@ -15,6 +15,7 @@ cd /home/auser/Crawler/11/6/Deploy && find . -name "*.log" -type f -mtime +3 -de
 cd /home/auser/Crawler/3/24 &&  find . -name "*.log" -type f -mtime +3 -delete
 cd /home/auser/Crawler/3/8/Deploy && rm -rf venv-bak *.1 && truncate -s 0 *.log
 cd /home/auser/Crawler/3/8/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
+cd /home/auser/Crawler/3/8/Deploy-bak && rm -rf venv tempDownload tempData logs
 cd /home/auser/Crawler/3/7/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/3/7/Deploy && rm -rf *.1 && truncate -s 0 *.log
 cd /home/auser/Crawler/40/8/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete 

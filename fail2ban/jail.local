@@ -4,5 +4,7 @@ ignoreip = 127.0.0.1/8
 findtime = 300
 maxretry = 1
 banaction = iptables-multiport
+
 [sshd]
 enabled = true
+backend = auto

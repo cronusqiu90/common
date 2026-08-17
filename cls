@@ -8,6 +8,7 @@ cd /home/auser/Crawler/6/18/Deploy/file/document && find . -type d -empty -delet
 cd /home/auser/Crawler/6/18/Deploy/data && find . -type f -mtime +60 -delete
 cd /home/auser/Crawler/85/1/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/34/8/Deploy/logs &&  find . -name "*.log" -type f -mtime +3 -delete && truncate -s 0 redd 
+cd /home/auser/Crawler/27/8/Deploy/logs && find . -name "*.log" -type f -mtime +15 -delete
 cd /home/auser/Crawler/25/11/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/11/6/Deploy && find . -name "*.log" -type f -mtime +3 -delete
 cd /home/auser/Crawler/3/24 &&  find . -name "*.log" -type f -mtime +3 -delete

@@ -27,16 +27,13 @@ cd /home/auser/Crawler/3/7-bak/Deploy && rm -rf venv-bak venv running_cj3.log*
 cd /home/auser/Crawler/3/7-bak/Deploy/logs &&  find . -name "*.log" -type f -mtime +3 -delete
 cd /home/auser/Crawler/0/15/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/Download/logs && find . -name "*.log" -type f -mtime +30 -delete
+
 cd /home/auser/Crawler/ak && rm -rf nohup.out
-cd /home/auser/Crawler/ak/logs/app159 && find . -name "*.log" -type f -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0 check_account.log
-cd /home/auser/Crawler/ak/logs/app40 && find . -name "*.log" -type f -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0 check_account.log
-cd /home/auser/Crawler/ak/logs/app41 && find . -name "*.log" -type f -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0  check_account.log
-cd /home/auser/Crawler/ak/logs/tc_statistics && find . -name "*.log" -type f -mtime +30 -delete && rm -rf *.1 *.2 && truncate -s 0  check_account.log
-cd /home/auser/Crawler/ak/TMP2/159 && find . -type d -mtime +7 -exec rm -rf {} +
-cd /home/auser/Crawler/ak/TMP2/157 && find . -type d -mtime +7 -exec rm -rf {} +
-cd /home/auser/Crawler/ak/TMP2/140 && find . -type d -mtime +7 -exec rm -rf {} +
-cd /home/auser/Crawler/ak/TMP2/40 && find . -type d -mtime +7 -exec rm -rf {} +
-cd /home/auser/Crawler/ak/TMP2/41 && find . -type d -mtime +7 -exec rm -rf {} +
+cd /home/auser/Crawler/ak/logs && find . -type f -name "*-akcli.log" -exec truncate -s 0 {} +
+# cd /home/auser/Crawler/ak/logs && find . -type f -name "*.log.*" -delete
+# cd /home/auser/Crawler/ak/logs && find . -type f -name "*.log" -mtime +15 -delete 
+cd /home/auser/Crawler/ak/logs && find . -type f \( -name "*.log.*" -o \( -name "*.log" -mtime +15 \) \) -delete
+cd /home/auser/Crawler/ak/TMP2 && find . -type d -mtime +7 -exec rm -rf {} +
 
 cd /home/auser/TRClient && rmdir ./* 2>/dev/null
 cd /home/auser/TRClient && rm -rf MQ infos/ Release/ Deploy/ Node_forzk/ AppAgent BJ103 Node

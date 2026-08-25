@@ -72,3 +72,5 @@ cd /home/auser/TRClient/6/2/mqAgent/logs/synchron && find . -name "*.log" -type 
 cd /home/auser/TRClient/4/2 && rm -rf Deploy-old/ mqAgent-discard/ taskmgr-discard/ && find . -name "*.log" -type f -mtime +15 -delete
 cd /home/auser/TRClient/Agent/TC_Upload/logs/agent_send && find . -name "*.log" -type f -mtime +7 -delete
 cd /home/auser/TRClient/LargeFile/tools/IMWDog/Deploy && rm -rf venv && find . -name "*.log" -type f -mtime +3 -delete
+
+exit 0

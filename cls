@@ -24,6 +24,7 @@ cd /home/auser/Crawler/4/12/Deploy/logs && find . -name "*.log" -type f -mtime +
 cd /home/auser/Crawler/4/12/Deploy && rm -rf nohup.out
 cd /home/auser/Crawler/7/7/Deploy/logs && find . -name "*.log" -type f -mtime +30 -delete
 cd /home/auser/Crawler/7/7/Deploy/logs && find . -type f -name "FBClient_*.log" -size +10M -exec truncate -s 0 {} +
+cd /home/auser/Crawler/7/7/tools/testApi/CJ7Am && find . -name "*.log" -type f -size +10M -exec truncate -s 0 {} +
 
 cd /home/auser/Crawler/3/7-bak/Deploy && rm -rf venv-bak venv running_cj3.log*
 cd /home/auser/Crawler/3/7-bak/Deploy/logs &&  find . -name "*.log" -type f -mtime +3 -delete

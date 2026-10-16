@@ -74,6 +74,9 @@ if [ $? -ne 0 ]; then
     echo "Error: failed to drop/recreate ${DB_TABLE}." >&2
     exit 1
 fi
+rm -rf "${BACKUP_DIR}
 echo "==> ${DB_TABLE} recreated."
 echo "==> All done"
-rm -rf "${BACKUP_DIR}
+exit 0
+
+

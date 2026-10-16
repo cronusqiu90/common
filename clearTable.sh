@@ -13,7 +13,7 @@ DB_PORT="3306"
 DB_USER="root"
 DB_NAME="ak"
 
-while getopts "h:P:u:p:d:t:" opt; do
+while getopts "p:" opt; do
     case "${opt}" in
         p) DB_PASS="${OPTARG}" ;;
         *) usage ;;

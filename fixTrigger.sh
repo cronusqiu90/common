@@ -26,58 +26,9 @@ if [ -z "${DB_HOST}" ] || [ -z "${DB_USER}" ] || [ -z "${DB_PASS}" ] || [ -z "${
     usage
 fi
 
-# 统一的 mysql 执行封装
-MYSQL="mysql -h${DB_HOST} -P${DB_PORT} -u${DB_USER} -p${DB_PASS} ${DB_NAME} -N -B"
-
-echo "==> Connecting to ${DB_HOST}:${DB_PORT}/${DB_NAME}"
-
-# ---------------------------------------------------------------
-# 1. 获取 im_task_monitor 当前建表语句
-# ---------------------------------------------------------------
-echo "==> Fetching current DDL of im_task_monitor ..."
-CREATE_SQL=$(${MYSQL} -e "SHOW CREATE TABLE im_task_monitor\G" 2>/dev/null | awk '
-    /^Create Table:/ {flag=1; next}
-    flag {print}
-')
-
-if [ -z "${CREATE_SQL}" ]; then
-    echo "Error: failed to fetch DDL of im_task_monitor (table may not exist)." >&2
-    exit 1
-fi
-
-# 保存 DDL 备查 / 备份
-BACKUP_DIR="./trigger_backup_$(date +%Y%m%d_%H%M%S)"
-mkdir -p "${BACKUP_DIR}"
-echo "${CREATE_SQL}" > "${BACKUP_DIR}/im_task_monitor_ddl.sql"
-echo "==> DDL saved to ${BACKUP_DIR}/im_task_monitor_ddl.sql"
-
-
-# ---------------------------------------------------------------
-# 3. DROP TABLE + CREATE TABLE（使用原结构）
-# ---------------------------------------------------------------
-echo "==> Dropping and recreating im_task_monitor ..."
-
-# 使用 heredoc 把 DDL 内容注入
-{
-    echo "SET FOREIGN_KEY_CHECKS=0;"
-    echo "DROP TABLE IF EXISTS im_task_monitor;"
-    echo "${CREATE_SQL};"
-    echo "SET FOREIGN_KEY_CHECKS=1;"
-} | mysql -h"${DB_HOST}" -P"${DB_PORT}" -u"${DB_USER}" -p"${DB_PASS}" "${DB_NAME}"
-
-if [ $? -ne 0 ]; then
-    echo "Error: failed to drop/recreate im_task_monitor." >&2
-    exit 1
-fi
-echo "==> im_task_monitor recreated."
-rm -rf "${BACKUP_DIR}"
-
-# ---------------------------------------------------------------
-# 5. 重建触发器 crawlab_task_trigger
-# ---------------------------------------------------------------
 echo "==> Recreating trigger crawlab_task_trigger ..."
-
 mysql -h"${DB_HOST}" -P"${DB_PORT}" -u"${DB_USER}" -p"${DB_PASS}" "${DB_NAME}" <<'EOF'
+
 DELIMITER |
 
 DROP TRIGGER IF EXISTS crawlab_task_trigger |

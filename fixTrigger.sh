@@ -69,5 +69,3 @@ else
     echo "Error: failed to recreate trigger." >&2
     exit 1
 fi
-
-echo "==> All done. Backup directory: ${BACKUP_DIR}"

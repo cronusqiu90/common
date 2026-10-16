@@ -63,6 +63,44 @@ END |
 DELIMITER ;
 EOF
 
+mysql -h"${DB_HOST}" -P"${DB_PORT}" -u"${DB_USER}" -p"${DB_PASS}" "${DB_NAME}" <<'EOF'
+DROP TABLE `im_task_monitor`;
+CREATE TABLE `im_task_monitor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `batch_id` varchar(32) NOT NULL,
+  `task_id` varchar(32) NOT NULL,
+  `target` text NOT NULL,
+  `category` int(11) NOT NULL,
+  `domain` int(11) NOT NULL,
+  `param1` text,
+  `param2` text,
+  `task_status` int(11) NOT NULL,
+  `update_time` datetime NOT NULL,
+  `exception_info` text,
+  `is_auto_join` int(11) NOT NULL,
+  `account` varchar(32) DEFAULT NULL,
+  `remark` varchar(200) DEFAULT NULL,
+  `task_priority` int(11) DEFAULT NULL,
+  `command` int(11) NOT NULL,
+  `is_gathered` int(11) NOT NULL,
+  `server_ip` varchar(32) DEFAULT NULL,
+  `parent_group_id` varchar(32) DEFAULT NULL,
+  `root_group_id` varchar(32) DEFAULT NULL,
+  `chat_pos` varchar(256) DEFAULT NULL,
+  `is_deleted` int(11) NOT NULL,
+  `result_task_id` varchar(32) DEFAULT NULL,
+  `use_count` int(11) NOT NULL,
+  `is_dispatched` int(11) NOT NULL,
+  `sys_group_id` varchar(256) DEFAULT NULL,
+  `sys_user_id` int(11) DEFAULT NULL,
+  `gather_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_task_id` (`task_id`),
+  UNIQUE KEY `idx_task_id` (`task_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 ;
+EOF
+
+
 if [ $? -eq 0 ]; then
     echo "==> Trigger crawlab_task_trigger updated successfully."
 else

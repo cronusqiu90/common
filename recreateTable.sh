@@ -65,6 +65,7 @@ echo "==> Dropping and recreating ${DB_TABLE} ..."
 
 {
     echo "SET FOREIGN_KEY_CHECKS=0;"
+    echo "TRUNCATE TABLE \`${DB_TABLE}\`;"
     echo "DROP TABLE IF EXISTS \`${DB_TABLE}\`;"
     echo "${CREATE_SQL};"
     echo "SET FOREIGN_KEY_CHECKS=1;"

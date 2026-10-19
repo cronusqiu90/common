@@ -50,17 +50,13 @@ EXCLUDES=(
   '*.gz'
 )
 
-
-# ==================== 收集存在的目录 ====================
 EXIST_ABS=()
-echo ">>> 检查目录..."
 for d in "${DIRS[@]}"; do
-  if [ -d "${HOME_DIR}/${d}" ]; then
-    #EXIST_ABS+=("${HOME_DIR}/${d}")
-    #echo "  ✅ 存在: ${HOME_DIR}/${d}"
-  else
+  if [ ! -d "${HOME_DIR}/${d}" ]; then
     echo "  ⚠️  跳过（不存在）: ${HOME_DIR}/${d}"
+    continue
   fi
+  EXIST_ABS+=("${HOME_DIR}/${d}")
 done
 
 if [ ${#EXIST_ABS[@]} -eq 0 ]; then
@@ -69,17 +65,10 @@ if [ ${#EXIST_ABS[@]} -eq 0 ]; then
   exit 1
 fi
 
-#echo
-#echo ">>> 将同步以下目录:"
-#printf '    %s\n' "${EXIST_ABS[@]}"
-#echo
-
-# ==================== 阶段0：估算原始大小 ====================
-#echo ">>> 阶段0：估算原始大小..."
 T0_START=$(date +%s)
 TOTAL_BYTES=$(du -s --block-size=1 -- "${EXIST_ABS[@]}" 2>/dev/null | awk '{s+=$1} END {print s+0}')
 TOTAL_MB=$(awk -v b="$TOTAL_BYTES" 'BEGIN {printf "%.2f", b/1024/1024/1024}')
 T0_END=$(date +%s)
 T0_COST=$((T0_END - T0_START))
 
-echo "    原始总大小: ${TOTAL_MB} GB, 耗时: $(fmt_duration $T0_COST)"
+echo "Total: ${TOTAL_MB} GB. Duration: $(fmt_duration $T0_COST)"

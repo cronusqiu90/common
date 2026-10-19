@@ -89,6 +89,8 @@ EXCLUDES=(
   '*.dat'
   '*.zip'
   '*.gz'
+  '*.part_*'
+  '*.task'
 )
 
 # rclone 语法（*/xxx/* -> **/xxx/**）

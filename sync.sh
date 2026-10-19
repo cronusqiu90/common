@@ -1,13 +1,11 @@
 #!/bin/bash
-
-
 set -u
 
 # ==================== 默认配置（可用命令行覆盖） ====================
 HOME_DIR="/home/auser"
 DIRS=(Crawler TRClient Tools supervisord.d etc)
 
-MODE="rsync"
+MODE="rsync"                    # rsync | rclone
 
 # 目标机（rsync 用）
 TARGET_USER="auser"
@@ -15,9 +13,21 @@ TARGET_HOST="$1"
 TARGET_PASS="$2"
 TARGET_PORT=8513
 TARGET_BASE="/"
+
+# rclone remote 名称（rclone 用）
+RCLONE_REMOTE="aa"
+
+# rclone 参数
+RCLONE_TRANSFERS=16
+RCLONE_MULTI_THREAD=4
+RCLONE_CHECKERS=32
+
+# 是否跳过阶段1（测大小）
+SKIP_SIZE_TEST=1
+
+# 日志
 RSYNC_ERR_LOG="/tmp/rsync_error.log"
 RCLONE_ERR_LOG="/tmp/rclone_error.log"
-
 
 # ==================== 工具函数 ====================
 fmt_duration() {
@@ -81,6 +91,72 @@ EXCLUDES=(
   '*.gz'
 )
 
+# rclone 语法（*/xxx/* -> **/xxx/**）
+RCLONE_EXCLUDES=(
+  '.env'
+  '*.log'        # ← 关键改动
+  '*.tmp'        # ← 同样问题
+  '*.pid'        # ← 同样问题
+  '*.pyc'        # ← 同样问题
+  '*.data'       # ← 同样问题
+  '*.dat'        # ← 同样问题
+  '*.zip'        # ← 同样问题
+  '*.gz'         # ← 同样问题
+  #'**/venv/**'
+  '**/.venv/**'
+  '**/logs/**'
+  '**/tmp/**'
+  '**/__pycache__/**'
+  '**/.git/**'
+  '**/node_modules/**'
+  '**/.idea/**'
+  '**/.vscode/**'
+  '**/tempDownload/**'
+  '**/tempData/**'
+  '**/testCode/**'
+  '**/Temp/**'
+  '**/temp/**'
+)
+
+# ==================== 模式相关检查 ====================
+echo ">>> 传输模式: ${MODE}"
+echo
+
+if [ "$MODE" = "rsync" ]; then
+  if ! command -v sshpass >/dev/null 2>&1; then
+    echo "❌ 未安装 sshpass，请先: yum install sshpass -y"
+    exit 1
+  fi
+
+  echo ">>> 检查目标机是否安装 rsync..."
+
+  if ! sshpass -p "${TARGET_PASS}" ssh -p "${TARGET_PORT}" \
+      -o StrictHostKeyChecking=no \
+      -o UserKnownHostsFile=/dev/null \
+      -o ConnectTimeout=10 \
+      "${TARGET_USER}@${TARGET_HOST}" \
+      "command -v rsync >/dev/null 2>&1"; then
+    echo "❌ 目标机未安装 rsync，请先: yum install rsync -y"
+    unset SSHPASS
+    exit 1
+  fi
+  echo "    ✅ 目标机 rsync 可用"
+  echo
+else
+  if ! command -v rclone >/dev/null 2>&1; then
+    echo "❌ 未安装 rclone，请先: curl https://rclone.org/install.sh | bash"
+    exit 1
+  fi
+
+  if ! rclone listremotes | grep -q "^${RCLONE_REMOTE}:$"; then
+    echo "❌ rclone remote '${RCLONE_REMOTE}' 未配置"
+    echo "   请先执行: rclone config"
+    exit 1
+  fi
+  echo "    ✅ rclone remote '${RCLONE_REMOTE}' 可用"
+  echo
+fi
+
 # ==================== 收集存在的目录 ====================
 EXIST_ABS=()
 echo ">>> 检查目录..."
@@ -104,8 +180,8 @@ echo ">>> 将同步以下目录:"
 printf '    %s\n' "${EXIST_ABS[@]}"
 echo
 
-# ==================== 阶段1：估算原始大小 ====================
-echo ">>> 阶段1：估算原始大小..."
+# ==================== 阶段0：估算原始大小 ====================
+echo ">>> 阶段0：估算原始大小..."
 T0_START=$(date +%s)
 
 TOTAL_BYTES=$(du -sb "${EXIST_ABS[@]}" 2>/dev/null | awk '{s+=$1} END {print s+0}')
@@ -115,8 +191,53 @@ T0_END=$(date +%s)
 T0_COST=$((T0_END - T0_START))
 
 echo "    原始总大小: ${TOTAL_MB} MB"
-echo "    阶段1耗时: $(fmt_duration $T0_COST)"
+echo "    阶段0耗时: $(fmt_duration $T0_COST)"
 echo
+
+# ==================== 阶段1：测压缩后大小（可选） ====================
+T1_COST=0
+SIZE_BYTES=0
+if [ "$SKIP_SIZE_TEST" -eq 0 ]; then
+  echo ">>> 阶段1：测试压缩后大小（不落盘，会完整读一遍数据）..."
+  T1_START=$(date +%s)
+
+  TAR_EXCLUDE_ARGS=()
+  for pat in "${EXCLUDES[@]}"; do
+    TAR_EXCLUDE_ARGS+=(--exclude="$pat")
+  done
+
+  REL_DIRS=()
+  for d in "${DIRS[@]}"; do
+    [ -d "${HOME_DIR}/${d}" ] && REL_DIRS+=("home/auser/${d}")
+  done
+
+  if command -v zstd >/dev/null 2>&1; then
+    SIZE_BYTES=$(tar -cf - -C / "${TAR_EXCLUDE_ARGS[@]}" "${REL_DIRS[@]}" 2>/dev/null \
+      | zstd -T4 -1 \
+      | wc -c)
+  else
+    echo "    ⚠️  源端未装 zstd，阶段1跳过"
+    SIZE_BYTES=0
+  fi
+
+  if [ "$SIZE_BYTES" -gt 0 ]; then
+    SIZE_MB=$(awk -v b="$SIZE_BYTES" 'BEGIN {printf "%.2f", b/1024/1024}')
+    echo "    压缩后大小: ${SIZE_MB} MB (${SIZE_BYTES} 字节)"
+  fi
+
+  T1_END=$(date +%s)
+  T1_COST=$((T1_END - T1_START))
+
+  echo "    阶段1耗时: $(fmt_duration $T1_COST)"
+  echo
+
+  echo ">>> 磁盘可用空间:"
+  df -h /tmp | tail -1
+  echo
+else
+  echo ">>> 已跳过阶段1（--skip-size-test）"
+  echo
+fi
 
 # ==================== 阶段2：传输 ====================
 T2_START=$(date +%s)
@@ -133,7 +254,13 @@ if [ "$MODE" = "rsync" ]; then
   done
 
   : > "$RSYNC_ERR_LOG"
-  sshpass -p '${TARGET_PASS}' rsync -rlptz --partial -P -R  \
+
+  # -rlpgoDz：归档但去掉 t（避免改目录时间戳报 Operation not permitted）
+  # -O：不修改目录时间戳
+  # --partial：断点续传
+  # -q：静默，只输出错误
+  # -R：保留相对路径，配合目标 / 还原绝对路径
+  sshpass -p "${TARGET_PASS}" rsync -rlpgoDz --partial -q -R -O \
     -e "ssh -p ${TARGET_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
     "${RSYNC_EXCLUDE_ARGS[@]}" \
     "${EXIST_ABS[@]}" \
@@ -149,6 +276,48 @@ if [ "$MODE" = "rsync" ]; then
     echo
   fi
 
+else
+  # ---------- rclone 模式 ----------
+  echo ">>> 阶段2：rclone 传输到 ${RCLONE_REMOTE} ..."
+  echo
+
+  RCLONE_EXCLUDE_ARGS=()
+  for pat in "${RCLONE_EXCLUDES[@]}"; do
+    RCLONE_EXCLUDE_ARGS+=(--exclude "$pat")
+  done
+
+  echo ">>> rclone 排除参数: ${RCLONE_EXCLUDE_ARGS[*]}"
+
+  : > "$RCLONE_ERR_LOG"
+
+  for d in "${DIRS[@]}"; do
+    SRC="${HOME_DIR}/${d}"
+    [ -d "$SRC" ] || continue
+
+    echo ">>> 同步 ${d} ..."
+
+    rclone copy "$SRC" "${RCLONE_REMOTE}:/home/auser/${d}" \
+      --transfers="${RCLONE_TRANSFERS}" \
+      --multi-thread-streams="${RCLONE_MULTI_THREAD}" \
+      --checkers="${RCLONE_CHECKERS}" \
+      "${RCLONE_EXCLUDE_ARGS[@]}" \
+      -v \
+      --stats-one-line
+
+    RC=$?
+    if [ $RC -ne 0 ]; then
+      echo "❌ ${d} 同步失败（退出码 ${RC}）"
+      break
+    fi
+    echo "    ✅ ${d} 完成"
+    echo
+  done
+
+  if [ -s "$RCLONE_ERR_LOG" ]; then
+    echo "⚠️  rclone 错误/警告："
+    cat "$RCLONE_ERR_LOG"
+    echo
+  fi
 fi
 
 T2_END=$(date +%s)
@@ -157,12 +326,24 @@ T2_COST=$((T2_END - T2_START))
 echo
 
 # ==================== 汇总 ====================
-TOTAL_COST=$((T0_COST + T2_COST))
+TOTAL_COST=$((T0_COST + T1_COST + T2_COST))
+
 RATE_RAW=$(fmt_rate "$TOTAL_BYTES" "$T2_COST")
+if [ "$SIZE_BYTES" -gt 0 ]; then
+  RATE_COMP=$(fmt_rate "$SIZE_BYTES" "$T2_COST")
+else
+  RATE_COMP="N/A（阶段1已跳过）"
+fi
+
 echo "================================"
 echo "传输模式: ${MODE}"
 echo "耗时汇总"
-echo "  阶段1（估算原始大小）: $(fmt_duration $T0_COST)"
+echo "  阶段0（估算原始大小）: $(fmt_duration $T0_COST)"
+if [ "$SKIP_SIZE_TEST" -eq 0 ]; then
+  echo "  阶段1（测压缩后大小）: $(fmt_duration $T1_COST)"
+else
+  echo "  阶段1（测压缩后大小）: 已跳过"
+fi
 echo "  阶段2（传输）:         $(fmt_duration $T2_COST)"
 echo "  ------------------------------"
 echo "  总计:                  $(fmt_duration $TOTAL_COST)"

@@ -10,3 +10,6 @@ cd /home/auser/Crawler/3/7-bak20260324/Deploy && rm -rf venv venv-bak logs/* tem
 cd /home/auser/Crawler/9/11 && rm -rf tools Release Data
 cd /home/auser/Crawler/9/11/Deploy/venv/lib/python3.7/site-packages/front_9_11/logs && find . -type f -mtime +7 -delete
 cd /home/auser/Crawler/7/7 && rm -rf Data Deploy_old Release
+
+cd /home/auser/TRClient && find . -type f -name "*.log" -mtime +7 -exec truncate -s 0 {} +
+cd /home/auser/TRClient/LargeFile && find . -type f -name "*_ver002.zip" -mtime +90 -delete

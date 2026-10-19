@@ -97,12 +97,12 @@ echo
 echo ">>> 阶段0：估算原始大小..."
 T0_START=$(date +%s)
 
-TOTAL_BYTES=$(du -sb "${EXIST_ABS[@]}" 2>/dev/null | awk '{s+=$1} END {print s+0}')
-TOTAL_MB=$(awk -v b="$TOTAL_BYTES" 'BEGIN {printf "%.2f", b/1024/1024}')
+TOTAL_BYTES=$(du -s --block-size=1 -- "${EXIST_ABS[@]}" 2>/dev/null | awk '{s+=$1} END {print s+0}')
+TOTAL_MB=$(awk -v b="$TOTAL_BYTES" 'BEGIN {printf "%.2f", b/1024/1024/1024}')
 
 T0_END=$(date +%s)
 T0_COST=$((T0_END - T0_START))
 
-echo "    原始总大小: ${TOTAL_MB} MB"
+echo "    原始总大小: ${TOTAL_MB} GB"
 echo "    阶段0耗时: $(fmt_duration $T0_COST)"
 echo

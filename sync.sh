@@ -7,14 +7,14 @@ set -u
 HOME_DIR="/home/auser"
 DIRS=(Crawler TRClient Tools supervisord.d etc)
 
-MODE="rsync"  
+MODE="rsync"
 
 # 目标机（rsync 用）
 TARGET_USER="auser"
 TARGET_HOST="$1"
 TARGET_PASS="$2"
 TARGET_PORT=8513
-TARGET_BASE="/home/auser"
+TARGET_BASE="/"
 RSYNC_ERR_LOG="/tmp/rsync_error.log"
 RCLONE_ERR_LOG="/tmp/rclone_error.log"
 
@@ -133,7 +133,7 @@ if [ "$MODE" = "rsync" ]; then
   done
 
   : > "$RSYNC_ERR_LOG"
-  sshpass -p '${TARGET_PASS}' rsync -rlpgoDz --partial -q -R -O \
+  sshpass -p '${TARGET_PASS}' rsync -rlptz --partial -P -R  \
     -e "ssh -p ${TARGET_PORT} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
     "${RSYNC_EXCLUDE_ARGS[@]}" \
     "${EXIST_ABS[@]}" \
@@ -141,6 +141,7 @@ if [ "$MODE" = "rsync" ]; then
     2>>"$RSYNC_ERR_LOG"
 
   RC=$?
+  unset SSHPASS
 
   if [ -s "$RSYNC_ERR_LOG" ]; then
     echo "⚠️  rsync 错误/警告："
@@ -157,14 +158,7 @@ echo
 
 # ==================== 汇总 ====================
 TOTAL_COST=$((T0_COST + T2_COST))
-
 RATE_RAW=$(fmt_rate "$TOTAL_BYTES" "$T2_COST")
-if [ "$SIZE_BYTES" -gt 0 ]; then
-  RATE_COMP=$(fmt_rate "$SIZE_BYTES" "$T2_COST")
-else
-  RATE_COMP="N/A（阶段1已跳过）"
-fi
-
 echo "================================"
 echo "传输模式: ${MODE}"
 echo "耗时汇总"

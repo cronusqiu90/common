@@ -39,6 +39,7 @@ EXCLUDES=(
   '*/testCode/*'
   '*/Temp/*'
   '*/temp/*'
+  '*/browser/*'
   '.env'
   '*.log'
   '*.tmp'

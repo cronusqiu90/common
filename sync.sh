@@ -156,7 +156,7 @@ T2_COST=$((T2_END - T2_START))
 echo
 
 # ==================== 汇总 ====================
-TOTAL_COST=$((T0_COST + T1_COST + T2_COST))
+TOTAL_COST=$((T0_COST + T2_COST))
 
 RATE_RAW=$(fmt_rate "$TOTAL_BYTES" "$T2_COST")
 if [ "$SIZE_BYTES" -gt 0 ]; then

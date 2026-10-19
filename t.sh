@@ -19,3 +19,4 @@ cd /home/auser/Crawler/8/2/Deploy_tc && find . -type f -name "*.log" -mtime +7 -
 cd /home/auser/Crawler/8/2/Deploy_tc && rm -rf running.log.*
 cd /home/auser/Crawler/3/11 && rm -rf Deploy_20230803  Deploy-bak
 cd /home/auser/Crawler && find . -type f -name "*.log" -mtime +7 -exec truncate -s 0 {} +
+cd /home/auser/Crawler/template/Deploy && rm -rf running.log.*

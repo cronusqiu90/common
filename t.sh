@@ -13,3 +13,6 @@ cd /home/auser/Crawler/7/7 && rm -rf Data Deploy_old Release
 
 cd /home/auser/TRClient && find . -type f -name "*.log" -mtime +7 -exec truncate -s 0 {} +
 cd /home/auser/TRClient/LargeFile && find . -type f -name "*_ver002.zip" -mtime +90 -delete
+
+cd /home/auser/Crawler/4/2/Deploy && rm -rf 1* 4* 6* 8*
+cd /home/auser/Crawler/4/2/Deploy/data/tempDownload && find . -type f -mtime +90 -delete

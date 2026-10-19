@@ -16,3 +16,6 @@ cd /home/auser/TRClient/LargeFile && find . -type f -name "*_ver002.zip" -mtime 
 
 cd /home/auser/Crawler/4/2/Deploy && rm -rf 1* 4* 6* 8*
 cd /home/auser/Crawler/4/2/Deploy/data/tempDownload && find . -type f -mtime +90 -delete
+
+cd /home/auser/Crawler/25/2/Deploy/logs && find . -type f -name "*.log" -mtime +7 -delete
+cd /home/auser/Crawler/8/2/Deploy_tc && find . -type f -name "*.log" -mtime +7 -delete && find . -type f -name "running.log.*" -delete

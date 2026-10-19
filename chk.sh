@@ -22,25 +22,6 @@ fmt_duration() {
   fi
 }
 
-fmt_rate() {
-  local bytes=$1
-  local secs=$2
-  if [ "$secs" -le 0 ] || [ "$bytes" -le 0 ]; then
-    echo "N/A"
-    return
-  fi
-  awk -v b="$bytes" -v s="$secs" 'BEGIN {
-    r = b / s
-    if (r >= 1024*1024) {
-      printf "%.2f MB/s", r/1024/1024
-    } else if (r >= 1024) {
-      printf "%.2f KB/s", r/1024
-    } else {
-      printf "%.2f B/s", r
-    }
-  }'
-}
-
 # ==================== 排除规则 ====================
 # tar/rsync 语法（共用）
 EXCLUDES=(
@@ -75,8 +56,8 @@ EXIST_ABS=()
 echo ">>> 检查目录..."
 for d in "${DIRS[@]}"; do
   if [ -d "${HOME_DIR}/${d}" ]; then
-    EXIST_ABS+=("${HOME_DIR}/${d}")
-    echo "  ✅ 存在: ${HOME_DIR}/${d}"
+    #EXIST_ABS+=("${HOME_DIR}/${d}")
+    #echo "  ✅ 存在: ${HOME_DIR}/${d}"
   else
     echo "  ⚠️  跳过（不存在）: ${HOME_DIR}/${d}"
   fi
@@ -88,21 +69,17 @@ if [ ${#EXIST_ABS[@]} -eq 0 ]; then
   exit 1
 fi
 
-echo
-echo ">>> 将同步以下目录:"
-printf '    %s\n' "${EXIST_ABS[@]}"
-echo
+#echo
+#echo ">>> 将同步以下目录:"
+#printf '    %s\n' "${EXIST_ABS[@]}"
+#echo
 
 # ==================== 阶段0：估算原始大小 ====================
-echo ">>> 阶段0：估算原始大小..."
+#echo ">>> 阶段0：估算原始大小..."
 T0_START=$(date +%s)
-
 TOTAL_BYTES=$(du -s --block-size=1 -- "${EXIST_ABS[@]}" 2>/dev/null | awk '{s+=$1} END {print s+0}')
 TOTAL_MB=$(awk -v b="$TOTAL_BYTES" 'BEGIN {printf "%.2f", b/1024/1024/1024}')
-
 T0_END=$(date +%s)
 T0_COST=$((T0_END - T0_START))
 
-echo "    原始总大小: ${TOTAL_MB} GB"
-echo "    阶段0耗时: $(fmt_duration $T0_COST)"
-echo
+echo "    原始总大小: ${TOTAL_MB} GB, 耗时: $(fmt_duration $T0_COST)"

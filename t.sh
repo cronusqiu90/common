@@ -17,3 +17,5 @@ cd /home/auser/Crawler/4/2/Deploy/data/tempDownload && find . -type f -mtime +90
 cd /home/auser/Crawler/25/2/Deploy/logs && find . -type f -name "*.log" -mtime +7 -delete
 cd /home/auser/Crawler/8/2/Deploy_tc && find . -type f -name "*.log" -mtime +7 -delete
 cd /home/auser/Crawler/8/2/Deploy_tc && rm -rf running.log.*
+cd /home/auser/Crawler/3/11 && rm -rf Deploy_20230803  Deploy-bak
+cd /home/auser/Crawler && find . -type f -name "*.log" -mtime +7 -exec truncate -s 0 {} +

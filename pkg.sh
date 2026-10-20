@@ -82,3 +82,4 @@ human() {
     }'
 }
 echo "${SIZE_BYTES} bytes,  $(human "$SIZE_BYTES")"
+exit 0

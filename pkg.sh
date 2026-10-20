@@ -12,8 +12,6 @@ ZSTD_LEVEL=10
 ZSTD_THREADS=0          # 0 = 用满所有 CPU
 
 EXCLUDES=(
-  #'*/venv/*'
-  #'*/.venv/*'
   '*/logs/*'
   '*/tmp/*'
   '*/__pycache__/*'
@@ -26,7 +24,6 @@ EXCLUDES=(
   '*/testCode/*'
   '*/Temp/*'
   '*/temp/*'
-  '.env'
   '*.log'
   '*.tmp'
   '*.pid'

@@ -1,89 +1,68 @@
 #!/bin/bash
 
-# RabbitMQ 健康检查脚本
-# 需要安装: rabbitmqctl 或启用 management plugin
-
-RABBITMQ_HOST="${1:-localhost}"
-RABBITMQ_PORT="${2:-15672}"
-USER="${3:-admin}"
-PASS="${4:-guest}"
+RABBITMQ_HOST="localhost"
+USER="admin"
+PASS="${1:-guest}"
 
 echo "========================================="
-echo "RabbitMQ 服务器状态检查"
-echo "主机: $RABBITMQ_HOST"
+echo "RabbitMQ 核心指标快照"
 echo "时间: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "========================================="
 
-# 方法1: 使用 rabbitmqctl (本地执行)
+# 1. 连接数
 if command -v rabbitmqctl &> /dev/null; then
-    echo ""
-    echo "【连接数统计】"
-    rabbitmqctl list_connections name peer_host peer_port state | head -20
     CONN_COUNT=$(rabbitmqctl list_connections name --quiet | wc -l)
-    echo "总连接数: $CONN_COUNT"
-    
-    echo ""
-    echo "【队列消息堆积】"
-    rabbitmqctl list_queues name messages messages_ready messages_unacknowledged memory | sort -k2 -nr | head -20
-    
-    TOTAL_MESSAGES=$(rabbitmqctl list_queues messages --quiet | awk '{sum+=$1} END {print sum}')
-    echo "总消息数: $TOTAL_MESSAGES"
-    
-    echo ""
-    echo "【系统资源】"
-    rabbitmqctl status | grep -A 5 "disk_free_limit\|mem_limit\|mem_used"
-    
 else
-    # 方法2: 使用 HTTP API (远程执行)
-    BASE_URL="http://${RABBITMQ_HOST}:${RABBITMQ_PORT}/api"
-    
-    echo ""
-    echo "【连接数统计】"
-    CONN_DATA=$(curl -s -u ${USER}:${PASS} ${BASE_URL}/connections)
-    CONN_COUNT=$(echo $CONN_DATA | python3 -c "import sys,json; data=json.load(sys.stdin); print(len(data))" 2>/dev/null || echo "解析失败")
-    echo "总连接数: $CONN_COUNT"
-    
-    echo ""
-    echo "【队列消息堆积 TOP 20】"
-    curl -s -u ${USER}:${PASS} ${BASE_URL}/queues | \
+    CONN_COUNT=$(curl -s -u ${USER}:${PASS} http://${RABBITMQ_HOST}:15672/api/connections | python3 -c "import sys,json; print(len(json.load(sys.stdin)))" 2>/dev/null || echo "0")
+fi
+echo "当前连接数: $CONN_COUNT"
+
+# 2. 总消息堆积数
+if command -v rabbitmqctl &> /dev/null; then
+    TOTAL_MSG=$(rabbitmqctl list_queues messages --quiet | awk '{sum+=$1} END {print sum+0}')
+else
+    TOTAL_MSG=$(curl -s -u ${USER}:${PASS} http://${RABBITMQ_HOST}:15672/api/queues | python3 -c "import sys,json; print(sum(q.get('messages',0) for q in json.load(sys.stdin)))" 2>/dev/null || echo "0")
+fi
+echo "总消息堆积: $TOTAL_MSG"
+
+# 3. 内存使用 (MB)
+if command -v rabbitmqctl &> /dev/null; then
+    MEM_USED=$(rabbitmqctl status | grep "memory" | grep "total" | awk '{printf "%.2f", $2/1024/1024}')
+    MEM_LIMIT=$(rabbitmqctl status | grep "mem_limit" | awk '{printf "%.2f", $2/1024/1024}')
+    if [ -n "$MEM_LIMIT" ] && [ "$MEM_LIMIT" != "0.00" ]; then
+        MEM_PCT=$(awk "BEGIN {printf \"%.1f\", $MEM_USED/$MEM_LIMIT*100}")
+    else
+        MEM_PCT="N/A"
+    fi
+    echo "内存使用: ${MEM_USED} MB / ${MEM_LIMIT} MB (${MEM_PCT}%)"
+else
+    curl -s -u ${USER}:${PASS} http://${RABBITMQ_HOST}:15672/api/nodes | \
     python3 -c "
 import sys, json
-data = json.load(sys.stdin)
-sorted_q = sorted(data, key=lambda x: x.get('messages', 0), reverse=True)[:20]
-print(f'{\"队列名\":<40} {\"总消息\":<10} {\"待消费\":<10} {\"未确认\":<10}')
-for q in sorted_q:
-    name = q['name'][:38]
-    msgs = q.get('messages', 0)
-    ready = q.get('messages_ready', 0)
-    unack = q.get('messages_unacknowledged', 0)
-    print(f'{name:<40} {msgs:<10} {ready:<10} {unack:<10}')
-" 2>/dev/null
-    
-    TOTAL_MESSAGES=$(curl -s -u ${USER}:${PASS} ${BASE_URL}/queues | \
-    python3 -c "import sys,json; data=json.load(sys.stdin); print(sum(q.get('messages',0) for q in data))" 2>/dev/null || echo "N/A")
-    echo "总消息数: $TOTAL_MESSAGES"
-    
-    echo ""
-    echo "【系统资源】"
-    curl -s -u ${USER}:${PASS} ${BASE_URL}/nodes | \
-    python3 -c "
-import sys, json
-data = json.load(sys.stdin)
-for node in data:
-    name = node['name']
-    mem_used = node.get('mem_used', 0) / 1024 / 1024
-    mem_limit = node.get('mem_limit', 0) / 1024 / 1024
-    disk_free = node.get('disk_free', 0) / 1024 / 1024 / 1024
-    disk_limit = node.get('disk_free_limit', 0) / 1024 / 1024 / 1024
-    fd_used = node.get('fd_used', 0)
-    fd_total = node.get('fd_total', 0)
-    print(f'节点: {name}')
-    print(f'  内存: {mem_used:.2f} MB / {mem_limit:.2f} MB ({mem_used/mem_limit*100:.1f}%)')
-    print(f'  磁盘: {disk_free:.2f} GB 可用 / {disk_limit:.2f} GB 限制')
-    print(f'  文件描述符: {fd_used} / {fd_total}')
+nodes = json.load(sys.stdin)
+for n in nodes:
+    used = n.get('mem_used',0)/1024/1024
+    limit = n.get('mem_limit',0)/1024/1024
+    pct = (used/limit*100) if limit > 0 else 0
+    print(f'内存使用: {used:.2f} MB / {limit:.2f} MB ({pct:.1f}%)')
 " 2>/dev/null
 fi
 
-echo ""
+# 4. 磁盘剩余 (MB)
+if command -v rabbitmqctl &> /dev/null; then
+    DISK_FREE=$(rabbitmqctl status | grep "disk_free" | head -1 | awk '{printf "%.2f", $2/1024/1024}')
+    DISK_LIMIT=$(rabbitmqctl status | grep "disk_free_limit" | awk '{printf "%.2f", $2/1024/1024}')
+    echo "磁盘剩余: ${DISK_FREE} MB (限制: ${DISK_LIMIT} MB)"
+else
+    curl -s -u ${USER}:${PASS} http://${RABBITMQ_HOST}:15672/api/nodes | \
+    python3 -c "
+import sys, json
+nodes = json.load(sys.stdin)
+for n in nodes:
+    free = n.get('disk_free',0)/1024/1024
+    limit = n.get('disk_free_limit',0)/1024/1024
+    print(f'磁盘剩余: {free:.2f} MB (限制: {limit:.2f} MB)')
+" 2>/dev/null
+fi
+
 echo "========================================="
-echo "检查完成"

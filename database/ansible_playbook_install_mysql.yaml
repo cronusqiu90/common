@@ -21,7 +21,7 @@
     
     - name: [3] download my.cnf
       get_url:
-        url: https://raw.githubusercontent.com/cronusqiu90/common/main/mysql/my.cnf
+        url: https://raw.githubusercontent.com/cronusqiu90/common/main/database/my.cnf
         dest: /etc/my.cnf
 
     - name: [3] start mysqld service

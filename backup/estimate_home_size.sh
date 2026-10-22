@@ -1,11 +1,9 @@
 #!/bin/bash
 set -u
 
-# ==================== 默认配置（可用命令行覆盖） ====================
+# ==================== 默认配置 ====================
 HOME_DIR="/home/auser"
 DIRS=(Crawler TRClient Tools supervisord.d etc)
-
-MODE="rsync"                    # rsync | rclone
 
 # ==================== 工具函数 ====================
 fmt_duration() {
@@ -13,19 +11,14 @@ fmt_duration() {
   local h=$((total / 3600))
   local m=$(((total % 3600) / 60))
   local s=$((total % 60))
-  if [ "$h" -gt 0 ]; then
-    printf "%dh %dm %ds" "$h" "$m" "$s"
-  elif [ "$m" -gt 0 ]; then
-    printf "%dm %ds" "$m" "$s"
-  else
-    printf "%ds" "$s"
+  if [ "$h" -gt 0 ]; then printf "%dh %dm %ds" "$h" "$m" "$s"
+  elif [ "$m" -gt 0 ]; then printf "%dm %ds" "$m" "$s"
+  else printf "%ds" "$s"
   fi
 }
 
 # ==================== 排除规则 ====================
-# tar/rsync 语法（共用）
 EXCLUDES=(
-  #'*/venv/*'
   '*/.venv/*'
   '*/logs/*'
   '*/tmp/*'
@@ -40,7 +33,6 @@ EXCLUDES=(
   '*/Temp/*'
   '*/temp/*'
   '*/browser/*'
-  '.env'
   '*.log'
   '*.tmp'
   '*.pid'
@@ -49,6 +41,10 @@ EXCLUDES=(
   '*.dat'
   '*.zip'
   '*.gz'
+  '*.mp3'
+  '*.mp4'
+  '*.jpg'
+  '*.png'
 )
 
 EXIST_ABS=()
@@ -62,14 +58,33 @@ done
 
 if [ ${#EXIST_ABS[@]} -eq 0 ]; then
   echo "❌ 没有任何目录存在，退出"
-  [ "$MODE" = "rsync" ] && unset SSHPASS
   exit 1
 fi
 
 T0_START=$(date +%s)
-TOTAL_BYTES=$(du -s --block-size=1 -- "${EXIST_ABS[@]}" 2>/dev/null | awk '{s+=$1} END {print s+0}')
-TOTAL_MB=$(awk -v b="$TOTAL_BYTES" 'BEGIN {printf "%.2f", b/1024/1024/1024}')
+TOTAL_BYTES=0
+for src_dir in "${EXIST_ABS[@]}"; do
+  FIND_ARGS=()
+  for pattern in "${EXCLUDES[@]}"; do
+    if [[ "$pattern" == \*/* ]]; then
+      dir_name=$(echo "$pattern" | sed 's|^\*/||; s|/\*$||')
+      FIND_ARGS+=(-name "$dir_name" -prune -o)
+    else
+      FIND_ARGS+=(-name "$pattern" -prune -o)
+    fi
+  done
+  CURRENT_SIZE=$(find "$src_dir" "${FIND_ARGS[@]}" -type f -print0 2>/dev/null | \
+                 du -c --block-size=1 --files0-from=- 2>/dev/null | \
+                 tail -n 1 | awk '{print $1}')
+  if [ -n "$CURRENT_SIZE" ] && [ "$CURRENT_SIZE" -gt 0 ]; then
+    TOTAL_BYTES=$((TOTAL_BYTES + CURRENT_SIZE))
+  fi
+done
+
 T0_END=$(date +%s)
 T0_COST=$((T0_END - T0_START))
 
-echo "Total: ${TOTAL_MB} GB. Duration: $(fmt_duration $T0_COST)"
+TOTAL_GB=$(awk -v b="$TOTAL_BYTES" 'BEGIN {printf "%.2f", b/1024/1024/1024}')
+TOTAL_MB=$(awk -v b="$TOTAL_BYTES" 'BEGIN {printf "%.2f", b/1024/1024}')
+
+echo "Total:${TOTAL_GB} GB, (${TOTAL_MB} MB), $(fmt_duration $T0_COST)"

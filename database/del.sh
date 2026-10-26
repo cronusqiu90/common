@@ -40,6 +40,7 @@ for DB in $DATABASES; do
                 echo "查询剩余记录失败 $REMAIN"
             elif [ "$REMAIN" -eq 0 ] 2>/dev/null; then
                 echo " 删除完成"
+                break
             else
                 echo " 第 ${BATCH_NUM} 批后检查，剩余 $REMAIN."
             fi

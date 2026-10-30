@@ -4,7 +4,7 @@
 DB_HOST="localhost"
 DB_PORT="3306"
 DB_USER="root"
-DB_PASSWORD="$1"
+DB_PASSWORD="admin@2018"
 TARGET_TABLE="im_task"
 
 DELETE_SQL="DELETE FROM ${TARGET_TABLE} WHERE command=1 and task_status in (2,3,4,5) LIMIT 500;"

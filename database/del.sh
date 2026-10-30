@@ -28,14 +28,14 @@ for DB in $DATABASES; do
 
     while true; do
         BATCH_NUM=$((BATCH_NUM + 1))
-        RESULT=$(mysql -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASSWORD" -D "$DB" -e "$DELETE_SQL" 2>/dev/null)
+        RESULT=$(mysql -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASSWORD" -D "$DB" -e "$DELETE_SQL" 2>&1)
         if [ $? -ne 0 ]; then
             echo "  ✗ 第${BATCH_NUM}批删除失败: $RESULT"
             break
         fi
         # 每10批输出一次进度，避免刷屏
         if [ $((BATCH_NUM % 10)) -eq 0 ]; then
-            REMAIN=$(mysql -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASSWORD" -N -D "$DB" -e "$CHK_SQL" 2>&1)
+            REMAIN=$(mysql -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASSWORD" -N -D "$DB" -e "$CHK_SQL" 2>/dev/null)
             if [ $? -ne 0 ];then
                 echo "查询剩余记录失败 $REMAIN"
             elif [ "$REMAIN" -eq 0 ] 2>/dev/null; then

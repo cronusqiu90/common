@@ -7,7 +7,7 @@ Wants=network-online.target
 [Service]
 Type=notify
 NotifyAccess=all
-EnvironmentFile=-/etc/default/telegraf
+EnvironmentFile=/etc/telegraf/.env
 User=telegraf
 ExecStart=/usr/bin/telegraf --quiet -config /etc/telegraf/telegraf.conf -config-directory /etc/telegraf/telegraf.d $TELEGRAF_OPTS
 ExecReload=/bin/kill -HUP $MAINPID

@@ -3,6 +3,12 @@
 systemctl stop supervisord
 systemctl stop mysql
 
+pkill -9 "python"
+pkill -9 "TC"
+pkill -9 "cj"
+pkill -9 "Crawler"
+pkill -9 "TRClient"
+
 
 rm -rf /usr/local/bin/*
 rm -rf /home/auser
